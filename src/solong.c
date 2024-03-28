@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   solong.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: polenyc <polenyc@student.42.fr>            +#+  +:+       +#+        */
+/*   By: blackrider <blackrider@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 12:19:03 by polenyc           #+#    #+#             */
-/*   Updated: 2024/03/28 13:57:37 by polenyc          ###   ########.fr       */
+/*   Updated: 2024/03/28 18:02:03 by blackrider       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minilibx-linux/mlx.h"
+#include "../minilibx-linux/mlx.h"
 #include <stdlib.h>
 #include <stdio.h>
 #define XK_Escape 65307
