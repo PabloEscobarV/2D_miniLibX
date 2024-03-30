@@ -6,7 +6,7 @@
 /*   By: blackrider <blackrider@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 12:19:03 by polenyc           #+#    #+#             */
-/*   Updated: 2024/03/29 16:16:38 by blackrider       ###   ########.fr       */
+/*   Updated: 2024/03/30 13:08:01 by blackrider       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ int	handle_input(int keysum, t_mlxdata *data)
 		color_screen(data, encode_rgb(0, 255, 0));
 	if (keysum == XK_b)
 		color_screen(data, encode_rgb(0, 0, 255));
-	mlx_put_image_to_window(data->mlxapp, data->mlxwindow, data->mlximg->img_ptr, 0, 0);
+	// mlx_put_image_to_window(data->mlxapp, data->mlxwindow, data->mlximg->img_ptr, 0, 0);
 	return (0);
 }
 
@@ -121,19 +121,41 @@ int	main(void)
 		exit(-1);
 	}
 	data.mlxwindow = mlx_new_window(data.mlxapp, SIZE_X + 100, SIZE_Y + 100, "DARROVA!!");
-	bgimg.img = mlx_xpm_file_to_image(data.mlxapp, "../background/background.xpm", &bgimg.img_width, &bgimg.img_height);
+	bgimg.img = mlx_xpm_file_to_image(data.mlxapp, "/home/blackrider/wolfsburg/2D_miniLibX/background/bgimg_n.xpm", &bgimg.img_width, &bgimg.img_height);
 	if (!(bgimg.img))
 		printf("ERROR!!! Bad image PATH\n");
-	data.mlximg->img_ptr = mlx_new_image(data.mlxapp, SIZE_X, SIZE_Y);
-	data.mlximg->img_pixels = mlx_get_data_addr(data.mlximg->img_ptr, 
-		&data.mlximg->bits_per_pixel, &data.mlximg->line_len, &data.mlximg->endian);
-	mlx_put_image_to_window(data.mlxapp, data.mlxwindow, bgimg.img, bgimg.img_width, bgimg.img_height);
+	mlx_put_image_to_window(data.mlxapp, data.mlxwindow, bgimg.img, 0, 0);
 	mlx_key_hook(data.mlxwindow, handle_input, &data);
-	mlx_mouse_hook(data.mlxwindow, cross_close, &data);
 	mlx_loop(data.mlxapp);
 	return (0);
 }
 
+
+// int	main(void)
+// {
+// 	t_mlxdata	data;
+// 	t_bgimg		bgimg;
+
+// 	data.mlximg = malloc(sizeof(t_mlximg));
+// 	data.mlxapp = mlx_init();
+// 	if (!(data.mlxapp))
+// 	{
+// 		perror("mlx init");
+// 		exit(-1);
+// 	}
+// 	data.mlxwindow = mlx_new_window(data.mlxapp, SIZE_X + 100, SIZE_Y + 100, "DARROVA!!");
+// 	bgimg.img = mlx_xpm_file_to_image(data.mlxapp, "/home/blackrider/wolfsburg/2D_miniLibX/background/bgimg_n.xpm", &bgimg.img_width, &bgimg.img_height);
+// 	if (!(bgimg.img))
+// 		printf("ERROR!!! Bad image PATH\n");
+// 	// data.mlximg->img_ptr = mlx_new_image(data.mlxapp, SIZE_X, SIZE_Y);
+// 	// data.mlximg->img_pixels = mlx_get_data_addr(data.mlximg->img_ptr, 
+// 		// &data.mlximg->bits_per_pixel, &data.mlximg->line_len, &data.mlximg->endian);
+// 	mlx_put_image_to_window(data.mlxapp, data.mlxwindow, bgimg.img, 0, 0);
+// 	// mlx_mouse_hook(data.mlxwindow, cross_close, &data);
+// 	// mlx_key_hook(data.mlxwindow, handle_input, &data);
+// 	mlx_loop(data.mlxapp);
+// 	return (0);
+// }
 
 // typedef struct	s_data {
 // 	void	*img_ptr;
