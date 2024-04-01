@@ -6,7 +6,7 @@
 /*   By: blackrider <blackrider@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 12:19:03 by polenyc           #+#    #+#             */
-/*   Updated: 2024/04/01 15:02:02 by blackrider       ###   ########.fr       */
+/*   Updated: 2024/04/01 15:45:29 by blackrider       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ typedef struct s_bgimg
 	void	*img;
 	int		img_width;
 	int		img_height;
-}			t_bgimg;
+}			t_img;
 
 
 typedef	struct s_mlximg
@@ -39,6 +39,8 @@ typedef	struct s_mlximg
 	int		line_len;
 	int		img_width;
 	int		img_height;
+	int		x;
+	int		y;
 }				t_mlximg;
 
 
@@ -46,7 +48,8 @@ typedef struct s_mlxdata
 {
 	void		*mlxapp;
 	void		*mlxwindow;
-	t_mlximg	*mlximg;
+	t_mlximg	*bgimg;
+	t_mlximg	*pacman;
 }				t_mlxdata;
 
 void	pixel_put(t_mlximg *img_ptr, int x, int y, int color)
@@ -66,22 +69,54 @@ int	color_screen(t_mlxdata *data, int color)
 {
 	for (int i = 0; i < SIZE_X; ++i)
 		for (int j = 0; j < SIZE_Y; ++j)
-			pixel_put(data->mlximg, i, j, color);
+			pixel_put(data->bgimg, i, j, color);
 	return (0);
 }
 
 int	handle_input(int keysum, t_mlxdata *data)
 {
-	if (keysum == XK_Escape)
-	{
-		printf("The %d key (EXC) has been pressed\n", keysum);
-		// mlx_destroy_image(data->mlxapp, data->mlximg->img_ptr);
-		mlx_destroy_window(data->mlxapp, data->mlxwindow);
-		mlx_destroy_display(data->mlxapp);
-		free(data->mlxapp);
-		exit(1);
-	}
 	printf("The %d has been pressed\n", keysum);
+	if (keysum == XK_w)
+	{
+		mlx_clear_window(data->mlxapp, data->mlxwindow);
+		mlx_put_image_to_window(data->mlxapp, data->mlxwindow, data->bgimg->img_ptr, 0, 0);
+		data->pacman->y = data->pacman->y - 5;
+		mlx_put_image_to_window(data->mlxapp, data->mlxwindow, data->pacman->img_ptr,
+			data->pacman->x, data->pacman->y);
+	}
+	if (keysum == XK_s)
+	{
+		mlx_clear_window(data->mlxapp, data->mlxwindow);
+		mlx_put_image_to_window(data->mlxapp, data->mlxwindow, data->bgimg->img_ptr, 0, 0);
+		data->pacman->y = data->pacman->y + 5;
+		mlx_put_image_to_window(data->mlxapp, data->mlxwindow, data->pacman->img_ptr,
+			data->pacman->x, data->pacman->y);
+	}
+	if (keysum == XK_d)
+	{
+		mlx_clear_window(data->mlxapp, data->mlxwindow);
+		mlx_put_image_to_window(data->mlxapp, data->mlxwindow, data->bgimg->img_ptr, 0, 0);
+		data->pacman->x = data->pacman->x + 5;
+		mlx_put_image_to_window(data->mlxapp, data->mlxwindow, data->pacman->img_ptr,
+			data->pacman->x, data->pacman->y);
+	}
+	if (keysum == XK_a)
+	{
+		mlx_clear_window(data->mlxapp, data->mlxwindow);
+		mlx_put_image_to_window(data->mlxapp, data->mlxwindow, data->bgimg->img_ptr, 0, 0);
+		data->pacman->x = data->pacman->x - 5;
+		mlx_put_image_to_window(data->mlxapp, data->mlxwindow, data->pacman->img_ptr,
+			data->pacman->x, data->pacman->y);
+	}
+	// if (keysum == XK_Escape)
+	// {
+	// 	printf("The %d key (EXC) has been pressed\n", keysum);
+	// 	// mlx_destroy_image(data->mlxapp, data->bgimg->img_ptr);
+	// 	mlx_destroy_window(data->mlxapp, data->mlxwindow);
+	// 	mlx_destroy_display(data->mlxapp);
+	// 	free(data->mlxapp);
+	// 	exit(1);
+	// }
 	// if (keysum == XK_space)
 	// 	sleep(1);
 	// if (keysum == XK_r)
@@ -90,7 +125,7 @@ int	handle_input(int keysum, t_mlxdata *data)
 	// 	color_screen(data, encode_rgb(0, 255, 0));
 	// if (keysum == XK_b)
 	// 	color_screen(data, encode_rgb(0, 0, 255));
-	// // mlx_put_image_to_window(data->mlxapp, data->mlxwindow, data->mlximg->img_ptr, 0, 0);
+	// // mlx_put_image_to_window(data->mlxapp, data->mlxwindow, data->bgimg->img_ptr, 0, 0);
 	return (0);
 }
 
@@ -105,10 +140,10 @@ int	cross_close(int button, int x, int y, t_mlxdata *data)
 int	close_event(t_mlxdata *data)
 {
 	printf("Cross button was prassed!!!\n-----EXIT!!!----\n");
-	mlx_destroy_image(data->mlxapp, data->mlximg->img_ptr);
+	mlx_destroy_image(data->mlxapp, data->bgimg->img_ptr);
 	mlx_destroy_window(data->mlxapp, data->mlxwindow);
 	mlx_destroy_display(data->mlxapp);
-	free(data->mlximg);
+	free(data->bgimg);
 	free(data->mlxapp);
 	exit(0);
 }
@@ -117,7 +152,8 @@ int	main(void)
 {
 	t_mlxdata	data;
 
-	data.mlximg = malloc(sizeof(t_mlximg));
+	data.bgimg = malloc(sizeof(t_mlximg));
+	data.pacman = malloc(sizeof(t_mlximg));
 	data.mlxapp = mlx_init();
 	if (!(data.mlxapp))
 	{
@@ -125,9 +161,14 @@ int	main(void)
 		exit(-1);
 	}
 	data.mlxwindow = mlx_new_window(data.mlxapp, SIZE_X + 100, SIZE_Y + 100, "DARROVA!!");
-	data.mlximg->img_ptr = mlx_xpm_file_to_image(data.mlxapp, "/home/blackrider/wolfsburg/2D_miniLibX/background/bgimg_n.xpm",
-		&data.mlximg->img_width, &data.mlximg->img_height);
-	mlx_put_image_to_window(data.mlxapp, data.mlxwindow, data.mlximg->img_ptr, 0, 0);
+	data.bgimg->img_ptr = mlx_xpm_file_to_image(data.mlxapp, "/home/blackrider/wolfsburg/2D_miniLibX/background/bgimg_n.xpm",
+		&data.bgimg->img_width, &data.bgimg->img_height);
+	data.pacman->img_ptr = mlx_xpm_file_to_image(data.mlxapp, "/home/blackrider/wolfsburg/2D_miniLibX/Pac-Man/pac_closed.xpm",
+		&data.pacman->img_width, &data.pacman->img_height);
+	data.pacman->x = SIZE_X / 2;
+	data.pacman->y = SIZE_Y - 100;
+	mlx_put_image_to_window(data.mlxapp, data.mlxwindow, data.bgimg->img_ptr, 0, 0);
+	mlx_put_image_to_window(data.mlxapp, data.mlxwindow, data.pacman->img_ptr, data.pacman->x, data.pacman->y);
 	mlx_key_hook(data.mlxwindow, handle_input, &data);
 	mlx_mouse_hook(data.mlxwindow, cross_close, &data);
 	mlx_hook(data.mlxwindow, 17, 1L<<3, close_event, &data);
@@ -139,9 +180,9 @@ int	main(void)
 // int	main(void)
 // {
 // 	t_mlxdata	data;
-// 	t_bgimg		bgimg;
+// 	t_img		bgimg;
 
-// 	data.mlximg = malloc(sizeof(t_mlximg));
+// 	data.bgimg = malloc(sizeof(t_mlximg));
 // 	data.mlxapp = mlx_init();
 // 	if (!(data.mlxapp))
 // 	{
@@ -152,9 +193,9 @@ int	main(void)
 // 	bgimg.img = mlx_xpm_file_to_image(data.mlxapp, "/home/blackrider/wolfsburg/2D_miniLibX/background/bgimg_n.xpm", &bgimg.img_width, &bgimg.img_height);
 // 	if (!(bgimg.img))
 // 		printf("ERROR!!! Bad image PATH\n");
-// 	// data.mlximg->img_ptr = mlx_new_image(data.mlxapp, SIZE_X, SIZE_Y);
-// 	// data.mlximg->img_pixels = mlx_get_data_addr(data.mlximg->img_ptr, 
-// 		// &data.mlximg->bits_per_pixel, &data.mlximg->line_len, &data.mlximg->endian);
+// 	// data.bgimg->img_ptr = mlx_new_image(data.mlxapp, SIZE_X, SIZE_Y);
+// 	// data.bgimg->img_pixels = mlx_get_data_addr(data.bgimg->img_ptr, 
+// 		// &data.bgimg->bits_per_pixel, &data.bgimg->line_len, &data.bgimg->endian);
 // 	mlx_put_image_to_window(data.mlxapp, data.mlxwindow, bgimg.img, 0, 0);
 // 	// mlx_mouse_hook(data.mlxwindow, cross_close, &data);
 // 	// mlx_key_hook(data.mlxwindow, handle_input, &data);
