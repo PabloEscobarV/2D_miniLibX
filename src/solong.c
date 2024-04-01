@@ -6,7 +6,7 @@
 /*   By: blackrider <blackrider@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 12:19:03 by polenyc           #+#    #+#             */
-/*   Updated: 2024/03/30 13:08:01 by blackrider       ###   ########.fr       */
+/*   Updated: 2024/04/01 15:02:02 by blackrider       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 #include <stdio.h>
 #include <unistd.h>
 #include <X11/keysym.h>
+#include <X11/Xlib.h>
 
 #define SIZE_X 800
 #define SIZE_Y 800
@@ -36,6 +37,8 @@ typedef	struct s_mlximg
 	int		bits_per_pixel;
 	int		endian;
 	int		line_len;
+	int		img_width;
+	int		img_height;
 }				t_mlximg;
 
 
@@ -72,46 +75,47 @@ int	handle_input(int keysum, t_mlxdata *data)
 	if (keysum == XK_Escape)
 	{
 		printf("The %d key (EXC) has been pressed\n", keysum);
-		mlx_destroy_image(data->mlxapp, data->mlximg->img_ptr);
+		// mlx_destroy_image(data->mlxapp, data->mlximg->img_ptr);
 		mlx_destroy_window(data->mlxapp, data->mlxwindow);
 		mlx_destroy_display(data->mlxapp);
 		free(data->mlxapp);
-		free(data->mlximg);
 		exit(1);
 	}
 	printf("The %d has been pressed\n", keysum);
-	if (keysum == XK_space)
-		sleep(1);
-	if (keysum == XK_r)
-		color_screen(data, encode_rgb(255, 0, 0));
-	if (keysum == XK_g)
-		color_screen(data, encode_rgb(0, 255, 0));
-	if (keysum == XK_b)
-		color_screen(data, encode_rgb(0, 0, 255));
-	// mlx_put_image_to_window(data->mlxapp, data->mlxwindow, data->mlximg->img_ptr, 0, 0);
+	// if (keysum == XK_space)
+	// 	sleep(1);
+	// if (keysum == XK_r)
+	// 	color_screen(data, encode_rgb(255, 0, 0));
+	// if (keysum == XK_g)
+	// 	color_screen(data, encode_rgb(0, 255, 0));
+	// if (keysum == XK_b)
+	// 	color_screen(data, encode_rgb(0, 0, 255));
+	// // mlx_put_image_to_window(data->mlxapp, data->mlxwindow, data->mlximg->img_ptr, 0, 0);
 	return (0);
 }
 
 int	cross_close(int button, int x, int y, t_mlxdata *data)
 {
-	printf("Button:\t%d\tx: %d\ty: %d\n", button, x, y);
-	printf("real size:\t%d\n", data->mlximg->line_len);
-	if (button == XK_Left && x > SIZE_X - 5 && y < 5)
-	{
-		mlx_destroy_image(data->mlxapp, data->mlximg->img_ptr);
-		mlx_destroy_window(data->mlxapp, data->mlxwindow);
-		mlx_destroy_display(data->mlxapp);
-		free(data->mlxapp);
-		free(data->mlximg);
-		exit(1);
-	}
+	printf("button:\t%d\n", button);
+	if (button == 1)
+		printf("Button:\t%d\tx: %d\ty: %d\n", button, x, y);
 	return (0);
+}
+
+int	close_event(t_mlxdata *data)
+{
+	printf("Cross button was prassed!!!\n-----EXIT!!!----\n");
+	mlx_destroy_image(data->mlxapp, data->mlximg->img_ptr);
+	mlx_destroy_window(data->mlxapp, data->mlxwindow);
+	mlx_destroy_display(data->mlxapp);
+	free(data->mlximg);
+	free(data->mlxapp);
+	exit(0);
 }
 
 int	main(void)
 {
 	t_mlxdata	data;
-	t_bgimg		bgimg;
 
 	data.mlximg = malloc(sizeof(t_mlximg));
 	data.mlxapp = mlx_init();
@@ -121,11 +125,12 @@ int	main(void)
 		exit(-1);
 	}
 	data.mlxwindow = mlx_new_window(data.mlxapp, SIZE_X + 100, SIZE_Y + 100, "DARROVA!!");
-	bgimg.img = mlx_xpm_file_to_image(data.mlxapp, "/home/blackrider/wolfsburg/2D_miniLibX/background/bgimg_n.xpm", &bgimg.img_width, &bgimg.img_height);
-	if (!(bgimg.img))
-		printf("ERROR!!! Bad image PATH\n");
-	mlx_put_image_to_window(data.mlxapp, data.mlxwindow, bgimg.img, 0, 0);
+	data.mlximg->img_ptr = mlx_xpm_file_to_image(data.mlxapp, "/home/blackrider/wolfsburg/2D_miniLibX/background/bgimg_n.xpm",
+		&data.mlximg->img_width, &data.mlximg->img_height);
+	mlx_put_image_to_window(data.mlxapp, data.mlxwindow, data.mlximg->img_ptr, 0, 0);
 	mlx_key_hook(data.mlxwindow, handle_input, &data);
+	mlx_mouse_hook(data.mlxwindow, cross_close, &data);
+	mlx_hook(data.mlxwindow, 17, 1L<<3, close_event, &data);
 	mlx_loop(data.mlxapp);
 	return (0);
 }
