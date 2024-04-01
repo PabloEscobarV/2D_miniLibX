@@ -6,7 +6,7 @@
 /*   By: blackrider <blackrider@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 12:19:03 by polenyc           #+#    #+#             */
-/*   Updated: 2024/04/01 15:45:29 by blackrider       ###   ########.fr       */
+/*   Updated: 2024/04/01 17:33:33 by blackrider       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ int	color_screen(t_mlxdata *data, int color)
 int	handle_input(int keysum, t_mlxdata *data)
 {
 	printf("The %d has been pressed\n", keysum);
-	if (keysum == XK_w)
+	if (keysum == XK_w || keysum == XK_Up)
 	{
 		mlx_clear_window(data->mlxapp, data->mlxwindow);
 		mlx_put_image_to_window(data->mlxapp, data->mlxwindow, data->bgimg->img_ptr, 0, 0);
@@ -84,7 +84,7 @@ int	handle_input(int keysum, t_mlxdata *data)
 		mlx_put_image_to_window(data->mlxapp, data->mlxwindow, data->pacman->img_ptr,
 			data->pacman->x, data->pacman->y);
 	}
-	if (keysum == XK_s)
+	if (keysum == XK_s || keysum == XK_Down)
 	{
 		mlx_clear_window(data->mlxapp, data->mlxwindow);
 		mlx_put_image_to_window(data->mlxapp, data->mlxwindow, data->bgimg->img_ptr, 0, 0);
@@ -92,7 +92,7 @@ int	handle_input(int keysum, t_mlxdata *data)
 		mlx_put_image_to_window(data->mlxapp, data->mlxwindow, data->pacman->img_ptr,
 			data->pacman->x, data->pacman->y);
 	}
-	if (keysum == XK_d)
+	if (keysum == XK_d || keysum == XK_Right)
 	{
 		mlx_clear_window(data->mlxapp, data->mlxwindow);
 		mlx_put_image_to_window(data->mlxapp, data->mlxwindow, data->bgimg->img_ptr, 0, 0);
@@ -100,7 +100,7 @@ int	handle_input(int keysum, t_mlxdata *data)
 		mlx_put_image_to_window(data->mlxapp, data->mlxwindow, data->pacman->img_ptr,
 			data->pacman->x, data->pacman->y);
 	}
-	if (keysum == XK_a)
+	if (keysum == XK_a || keysum == XK_Left)
 	{
 		mlx_clear_window(data->mlxapp, data->mlxwindow);
 		mlx_put_image_to_window(data->mlxapp, data->mlxwindow, data->bgimg->img_ptr, 0, 0);
@@ -169,8 +169,9 @@ int	main(void)
 	data.pacman->y = SIZE_Y - 100;
 	mlx_put_image_to_window(data.mlxapp, data.mlxwindow, data.bgimg->img_ptr, 0, 0);
 	mlx_put_image_to_window(data.mlxapp, data.mlxwindow, data.pacman->img_ptr, data.pacman->x, data.pacman->y);
-	mlx_key_hook(data.mlxwindow, handle_input, &data);
+	// mlx_key_hook(data.mlxwindow, handle_input, &data);
 	mlx_mouse_hook(data.mlxwindow, cross_close, &data);
+	mlx_hook(data.mlxwindow, 2, 1L, handle_input, &data);
 	mlx_hook(data.mlxwindow, 17, 1L<<3, close_event, &data);
 	mlx_loop(data.mlxapp);
 	return (0);
