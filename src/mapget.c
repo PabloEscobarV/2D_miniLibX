@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mapget.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: blackrider <blackrider@student.42.fr>      +#+  +:+       +#+        */
+/*   By: polenyc <polenyc@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/01 20:55:16 by blackrider        #+#    #+#             */
-/*   Updated: 2024/04/01 22:08:30 by blackrider       ###   ########.fr       */
+/*   Updated: 2024/04/02 12:35:18 by polenyc          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,32 +70,41 @@ int		*mapmartrixsize(char *filename)
 	return (size);
 }
 
-// char	**mapcopy(int file)
-// {
-// 	char	**mapmatrix;
+char	**mapcopy(char *filename, int *size)
+{
+	int		size_str;
+	int		i;
+	int		file;
+	char	**mapmatrix;
 
-// 	mapmatrix = malloc();
-// }
+	file = open(filename, O_RDONLY);
+	mapmatrix = malloc((size[1] + 1) * sizeof(char *));
+	if (!mapmatrix || !size || file < 0)
+		return (NULL);
+	size_str = (size[0] - size[1]) / size[1] + 1;
+	i = 0;
+	while (i < size[1])
+	{
+		mapmatrix[i] = malloc((1 + size_str) * sizeof(char));
+		if (read(file, mapmatrix[i], size_str) < 0)
+			break ;
+		++i;
+	}
+	mapmatrix[size[1]] = NULL;
+	close(file);
+	return (mapmatrix);
+}
 
-// int		mapchecker()
-// {
-
-// }
-
-// char	**mapmatrix(char *filename)
-// {
-// 	int	file;
-
-// 	file = open(filename, O_RDONLY);
-// 	if (file == -1)
-// 		return (NULL);
-	
-// }
+char	**mapmatrix(char *filename)
+{
+	return (mapcopy(filename, mapmartrixsize(filename)));
+}
 
 int	main()
 {
 	int		*size;
 	char	filename[1024];
+	char	**map;
 
 	printf("Enter the filename:\n");
 	scanf("%s", filename);
@@ -107,5 +116,17 @@ int	main()
 	}
 	printf("file size: %d\tcount of new lines symbols: %d\n", size[0], size[1]);
 	free(size);
+	map = mapmatrix(filename);
+	if (!map)
+	{
+		perror("Bad file operation");
+		exit(-1);
+	}
+	while (*map)
+	{
+		printf("%s", *map);
+		++map;
+	}
+	printf("\n");
 	return (0);
 }
