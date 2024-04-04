@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   solong.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: blackrider <blackrider@student.42.fr>      +#+  +:+       +#+        */
+/*   By: polenyc <polenyc@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 12:19:03 by polenyc           #+#    #+#             */
-/*   Updated: 2024/04/01 17:33:33 by blackrider       ###   ########.fr       */
+/*   Updated: 2024/04/04 10:24:47 by polenyc          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,6 @@
 #include <unistd.h>
 #include <X11/keysym.h>
 #include <X11/Xlib.h>
-
-#define SIZE_X 800
-#define SIZE_Y 800
 
 typedef unsigned char uchar;
 
@@ -161,9 +158,9 @@ int	main(void)
 		exit(-1);
 	}
 	data.mlxwindow = mlx_new_window(data.mlxapp, SIZE_X + 100, SIZE_Y + 100, "DARROVA!!");
-	data.bgimg->img_ptr = mlx_xpm_file_to_image(data.mlxapp, "/home/blackrider/wolfsburg/2D_miniLibX/background/bgimg_n.xpm",
+	data.bgimg->img_ptr = mlx_xpm_file_to_image(data.mlxapp, "background/background.xpm",
 		&data.bgimg->img_width, &data.bgimg->img_height);
-	data.pacman->img_ptr = mlx_xpm_file_to_image(data.mlxapp, "/home/blackrider/wolfsburg/2D_miniLibX/Pac-Man/pac_closed.xpm",
+	data.pacman->img_ptr = mlx_xpm_file_to_image(data.mlxapp, "Pac-Man/pac_closed.xpm",
 		&data.pacman->img_width, &data.pacman->img_height);
 	data.pacman->x = SIZE_X / 2;
 	data.pacman->y = SIZE_Y - 100;

@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   tools.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: blackrider <blackrider@student.42.fr>      +#+  +:+       +#+        */
+/*   By: polenyc <polenyc@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 13:02:20 by blackrider        #+#    #+#             */
-/*   Updated: 2024/04/03 13:07:01 by blackrider       ###   ########.fr       */
+/*   Updated: 2024/04/04 10:19:19 by polenyc          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../hdrs/so_long.h"
+#include "../hdrs/fdf.h"
 
 void	*freedub(void **ptr)
 {

@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   mapget.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: blackrider <blackrider@student.42.fr>      +#+  +:+       +#+        */
+/*   By: polenyc <polenyc@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/01 20:55:16 by blackrider        #+#    #+#             */
-/*   Updated: 2024/04/03 14:39:55 by blackrider       ###   ########.fr       */
+/*   Updated: 2024/04/04 10:20:37 by polenyc          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../hdrs/so_long.h"
+#include "../hdrs/fdf.h"
 #include <stdio.h>
 
 t_map		*crtt_map(int x, int y, int alt, long color)
@@ -20,7 +20,7 @@ t_map		*crtt_map(int x, int y, int alt, long color)
 	tmp = malloc(sizeof(t_map));
 	if (!tmp)
 		return (NULL);
-	tmp->altitude = alt;
+	tmp->z = alt;
 	tmp->color = color;
 	tmp->x = x;
 	tmp->y =y;
@@ -40,7 +40,7 @@ t_map	*sett_map(t_map *data, char *str, int x, int y)
 	strdata = tmp;
 	data->x = x;
 	data->y = y;
-	data->altitude = ft_atoi(*tmp);
+	data->z = ft_atoi(*tmp);
 	if (!(*(tmp + 1)))
 	{
 		freedub
@@ -95,8 +95,8 @@ void	printdata(void *ptr)
 	t_map	*data;
 
 	data = (t_map *)ptr;
-	printf("x: %d\ty: %d\taltitude: %d\tcolor: %d\n",
-		data->x, data->y, data->altitude, data->color);
+	printf("x: %d\ty: %d\tz: %d\tcolor: %d\n",
+		data->x, data->y, data->z, (int)data->color);
 }
 
 void	delfunc(void *data)

@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   maptostr.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: blackrider <blackrider@student.42.fr>      +#+  +:+       +#+        */
+/*   By: polenyc <polenyc@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 13:03:54 by blackrider        #+#    #+#             */
-/*   Updated: 2024/04/03 14:42:41 by blackrider       ###   ########.fr       */
+/*   Updated: 2024/04/04 10:19:11 by polenyc          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../hdrs/so_long.h"
+#include "../hdrs/fdf.h"
 
 int		sizeptr(char **map)
 {

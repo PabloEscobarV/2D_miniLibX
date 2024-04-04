@@ -1,10 +1,11 @@
-NAME = solong
+NAME = fdf
 
 SRCDIR = src
 OBJDIR = obj
 MINILIBXDIR = minilibx-linux
 
-SRC = $(wildcard $(SRCDIR)/*.c)
+# SRC = $(wildcard $(SRCDIR)/*.c)
+SRC = src/fdf.c
 OBJ = $(patsubst $(SRCDIR)/%.c, $(OBJDIR)/%.o, $(SRC))
 
 CC = gcc
