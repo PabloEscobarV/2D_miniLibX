@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fdf.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: polenyc <polenyc@student.42.fr>            +#+  +:+       +#+        */
+/*   By: blackrider <blackrider@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/01 20:56:21 by blackrider        #+#    #+#             */
-/*   Updated: 2024/04/09 13:23:28 by polenyc          ###   ########.fr       */
+/*   Updated: 2024/04/09 15:59:01 by blackrider       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ typedef struct s_mlxdata
 }				t_mlxdata;
 
 ////////////////////////////////TOOLS//////////////////////////////
-void	*freedub(void **ptr);
-void	*freetriple(void ***ptr);
-////////////////////////////////MAPTTOSTR//////////////////////////////
-char	***maptostr(char *filename);
+// void	*freedub(void **ptr);
+// void	*freetriple(void ***ptr);
+// ////////////////////////////////MAPTTOSTR//////////////////////////////
+// char	*maptostr(char *filename);
