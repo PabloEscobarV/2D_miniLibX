@@ -6,7 +6,7 @@
 /*   By: polenyc <polenyc@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/01 20:56:21 by blackrider        #+#    #+#             */
-/*   Updated: 2024/04/04 10:26:08 by polenyc          ###   ########.fr       */
+/*   Updated: 2024/04/09 13:23:28 by polenyc          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,19 @@
 #define SIZE_Y 800
 
 typedef unsigned char t_uchr;
+
+typedef struct
+{
+	long	z;
+	long	color;
+}			t_mapd;
+
+typedef struct
+{
+	size_t	size_x;
+	size_t	size_y;
+	t_mapd	**crd;
+}			t_crd;
 
 typedef	struct s_map
 {
