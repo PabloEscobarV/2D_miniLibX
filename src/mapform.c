@@ -6,7 +6,7 @@
 /*   By: blackrider <blackrider@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 13:21:21 by polenyc           #+#    #+#             */
-/*   Updated: 2024/04/10 14:25:12 by blackrider       ###   ########.fr       */
+/*   Updated: 2024/04/10 14:45:21 by blackrider       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,47 +15,6 @@
 #include <unistd.h>
 #include <fcntl.h>
 #include <stdio.h>
-
-void	*ft_free(void *ptr)
-{
-	free(ptr);
-	return (NULL);
-}
-
-void	*ft_free_d(void **ptr)
-{
-	void	**tmp;
-
-	tmp = ptr;
-	while(*tmp)
-	{
-		free(*tmp);
-		++tmp;
-	}
-	free(ptr);
-	return (NULL);
-}
-
-void	*ft_free_t(void ***ptr)
-{
-	int	i;
-	int	j;
-
-	i = 0;
-	while (ptr[i])
-	{
-		j = 0;
-		while (ptr[i][j])
-		{
-			free(ptr[i][j]);
-			++j;
-		}
-		free(ptr[i]);
-		++i;
-	}
-	free(ptr);
-	return (NULL);
-}
 
 int		sizematrix(char **mapstr)
 {
@@ -151,19 +110,6 @@ char	***crtcharmap(const char *filename)
 	}
 	map[size] = NULL;
 	ft_free_d((void **)mapstr);
-	// for (int i = 0; map[i]; ++i)
-	// {
-	// 	for (int j = 0; map[i][j]; ++j)
-	// 	{
-	// 		printf("%s", map[i][j]);
-	// 		if (ft_strlen(map[i][j]) > 1)
-	// 			printf(" ");
-	// 		else
-	// 			printf("  ");
-	// 	}
-	// 	printf("\n");
-	// }
-	// printf("\n-----\n");
 	return (map);
 }
 
@@ -236,7 +182,7 @@ int	main(void)
 {
 	t_crd	*crd;
 
-	crd = createmap("../maps/test_maps/elem-fract.fdf");
+	crd = createmap("../maps/test_maps/50-4.fdf");
 	for (int i = 0; i < crd->size_x; ++i)
 	{
 		for (int j = 0; j < crd->size_y; ++j)
