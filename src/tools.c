@@ -6,13 +6,13 @@
 /*   By: blackrider <blackrider@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/10 14:46:37 by blackrider        #+#    #+#             */
-/*   Updated: 2024/04/10 14:50:55 by blackrider       ###   ########.fr       */
+/*   Updated: 2024/04/10 20:37:06 by blackrider       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../hdrs/fdf.h"
 
-void	*free_crd(t_crd	*crd)
+void	*free_map(t_map	*crd)
 {
 	ft_free_d((void **)(crd->crd));
 	free(crd);

@@ -6,7 +6,7 @@
 /*   By: blackrider <blackrider@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 13:21:21 by polenyc           #+#    #+#             */
-/*   Updated: 2024/04/10 14:52:22 by blackrider       ###   ########.fr       */
+/*   Updated: 2024/04/10 20:37:16 by blackrider       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ char	***crtcharmap(const char *filename)
 	return (map);
 }
 
-t_mapd	*crtmapd(char **mapchar, t_crd *map)
+t_mapd	*crtmapd(char **mapchar, t_map *map)
 {
 	int		i;
 	char	**tmp;
@@ -96,14 +96,14 @@ t_mapd	*crtmapd(char **mapchar, t_crd *map)
 	return (data);
 }
 
-t_crd	*createmap(const char *filename)
+t_map	*createmap(const char *filename)
 {
 	int		i;
 	char	***charmap;
-	t_crd	*map;
+	t_map	*map;
 
 	charmap = crtcharmap(filename);
-	map = malloc(sizeof(t_crd));
+	map = malloc(sizeof(t_map));
 	if (!map)
 		return (NULL);
 	map->size_y = sizematrix(*charmap);
@@ -120,19 +120,19 @@ t_crd	*createmap(const char *filename)
 	return (map);
 }
 
-int	main(void)
-{
-	t_crd	*crd;
+// int	main(void)
+// {
+// 	t_map	*crd;
 
-	crd = createmap("../maps/test_maps/50-4.fdf");
-	for (int i = 0; i < crd->size_x; ++i)
-	{
-		for (int j = 0; j < crd->size_y; ++j)
-		{
-			printf("%d,%d\t", crd->crd[i][j].z, crd->crd[i][j].color);
-		}
-		printf("\n");
-	}
-	free_crd(crd);
-	return (0);
-}
+// 	crd = createmap("../maps/test_maps/50-4.fdf");
+// 	for (int i = 0; i < crd->size_x; ++i)
+// 	{
+// 		for (int j = 0; j < crd->size_y; ++j)
+// 		{
+// 			printf("%d,%d\t", crd->crd[i][j].z, crd->crd[i][j].color);
+// 		}
+// 		printf("\n");
+// 	}
+// 	free_map(crd);
+// 	return (0);
+// }
