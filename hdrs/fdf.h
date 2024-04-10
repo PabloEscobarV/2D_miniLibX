@@ -6,7 +6,7 @@
 /*   By: blackrider <blackrider@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/01 20:56:21 by blackrider        #+#    #+#             */
-/*   Updated: 2024/04/09 15:59:01 by blackrider       ###   ########.fr       */
+/*   Updated: 2024/04/10 14:52:12 by blackrider       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,10 @@ typedef struct s_mlxdata
 }				t_mlxdata;
 
 ////////////////////////////////TOOLS//////////////////////////////
-// void	*freedub(void **ptr);
-// void	*freetriple(void ***ptr);
+void	*free_crd(t_crd	*crd);
+long	tda_size(char ***map);
+int		sizematrix(char **mapstr);
+////////////////////////////////T_MAPD//////////////////////////////
+t_mapd  *create_mapd(long z, long color);
 // ////////////////////////////////MAPTTOSTR//////////////////////////////
 // char	*maptostr(char *filename);

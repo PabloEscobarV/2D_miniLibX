@@ -6,7 +6,7 @@
 /*   By: blackrider <blackrider@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 13:21:21 by polenyc           #+#    #+#             */
-/*   Updated: 2024/04/10 14:45:21 by blackrider       ###   ########.fr       */
+/*   Updated: 2024/04/10 14:52:22 by blackrider       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,46 +15,6 @@
 #include <unistd.h>
 #include <fcntl.h>
 #include <stdio.h>
-
-int		sizematrix(char **mapstr)
-{
-	int	size;
-
-	if (!mapstr)
-		return (-1);
-	size = 0;
-	while (mapstr[size])
-		++size;
-	return (size);
-}
-
-t_mapd  *create_mapd(long z, long color)
-{
-    t_mapd  *tmp;
-
-    tmp = malloc(sizeof(t_mapd));
-	if (!tmp)
-		return (NULL);
-	tmp->z = z;
-	tmp->color = color;
-	return (tmp);
-}
-
-long	filesize(const char *filename)
-{
-	long	size;
-	char	tmp;
-	int		file;
-
-	file = open(filename, O_RDONLY);
-	if (file < 3)
-		return (-1);
-	size = 0;
-	while (read(file, &tmp, sizeof(char)))
-		++size;
-	close(file);
-	return (size);
-}
 
 char	*maptostr(const char *filename)
 {
@@ -113,18 +73,6 @@ char	***crtcharmap(const char *filename)
 	return (map);
 }
 
-long	tda_size(char ***map)
-{
-	long	size;
-
-	if (!map)
-		return (-1);
-	size = 0;
-	while (map[size])
-		++size;
-	return (size);
-}
-
 t_mapd	*crtmapd(char **mapchar, t_crd *map)
 {
 	int		i;
@@ -170,12 +118,6 @@ t_crd	*createmap(const char *filename)
 	map->crd[map->size_x] = NULL;
 	ft_free_t((void ***)charmap);
 	return (map);
-}
-
-void	*free_crd(t_crd	*crd)
-{
-	ft_free_d((void **)(crd->crd));
-	free(crd);
 }
 
 int	main(void)
