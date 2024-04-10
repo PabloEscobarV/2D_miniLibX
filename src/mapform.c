@@ -6,7 +6,7 @@
 /*   By: blackrider <blackrider@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 13:21:21 by polenyc           #+#    #+#             */
-/*   Updated: 2024/04/09 16:03:49 by blackrider       ###   ########.fr       */
+/*   Updated: 2024/04/10 14:25:12 by blackrider       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <fcntl.h>
+#include <stdio.h>
 
 void	*ft_free(void *ptr)
 {
@@ -28,21 +29,42 @@ void	*ft_free_d(void **ptr)
 	tmp = ptr;
 	while(*tmp)
 	{
-		free(tmp);
+		free(*tmp);
 		++tmp;
 	}
 	free(ptr);
 	return (NULL);
 }
 
-int		sizematrix(char **mat)
+void	*ft_free_t(void ***ptr)
+{
+	int	i;
+	int	j;
+
+	i = 0;
+	while (ptr[i])
+	{
+		j = 0;
+		while (ptr[i][j])
+		{
+			free(ptr[i][j]);
+			++j;
+		}
+		free(ptr[i]);
+		++i;
+	}
+	free(ptr);
+	return (NULL);
+}
+
+int		sizematrix(char **mapstr)
 {
 	int	size;
 
-	if (!mat)
+	if (!mapstr)
 		return (-1);
 	size = 0;
-	while (mat[size])
+	while (mapstr[size])
 		++size;
 	return (size);
 }
@@ -59,7 +81,7 @@ t_mapd  *create_mapd(long z, long color)
 	return (tmp);
 }
 
-long	filesize(char *filename)
+long	filesize(const char *filename)
 {
 	long	size;
 	char	tmp;
@@ -75,7 +97,7 @@ long	filesize(char *filename)
 	return (size);
 }
 
-char	*maptostr(char filename)
+char	*maptostr(const char *filename)
 {
 	long	size;
 	int		file;
@@ -96,38 +118,52 @@ char	*maptostr(char filename)
 	return (tmp);
 }
 
-char	**crtcharmat(char *filename)
+char	**crtcharmat(const char *filename)
 {
 	char	*tmp;
-	char	**mat;
+	char	**mapstr;
 
 	tmp = maptostr(filename);
-	mat = ft_split(tmp, '\n');
+	mapstr = ft_split(tmp, '\n');
 	free(tmp);
-	if (!mat)
+	if (!mapstr)
 		return (NULL);
-	return (mat);
+	return (mapstr);
 }
 
-char	***crtcharmap(char *filename)
+char	***crtcharmap(const char *filename)
 {
 	int		i;
 	int		size;
-	char	**mat;
+	char	**mapstr;
 	char	***map;
 
-	mat = crtcharmat(filename);
-	size = sizematrix(mat);
+	mapstr = crtcharmat(filename);
+	size = sizematrix(mapstr);
 	map = malloc((size + 1) * sizeof(char **));
 	if (!map)
-		return (ft_free_d(mat));
-	i = size;
+		return ((char ***)ft_free_d((void **)mapstr));
+	i = 0;
 	while (i < size)
 	{
-		map[i] = ft_split(map[i], ' ');
+		map[i] = ft_split(mapstr[i], ' ');
 		++i;
 	}
-	ft_free_d((void **)mat);
+	map[size] = NULL;
+	ft_free_d((void **)mapstr);
+	// for (int i = 0; map[i]; ++i)
+	// {
+	// 	for (int j = 0; map[i][j]; ++j)
+	// 	{
+	// 		printf("%s", map[i][j]);
+	// 		if (ft_strlen(map[i][j]) > 1)
+	// 			printf(" ");
+	// 		else
+	// 			printf("  ");
+	// 	}
+	// 	printf("\n");
+	// }
+	// printf("\n-----\n");
 	return (map);
 }
 
@@ -166,7 +202,7 @@ t_mapd	*crtmapd(char **mapchar, t_crd *map)
 	return (data);
 }
 
-t_crd	*createmap(char *filename)
+t_crd	*createmap(const char *filename)
 {
 	int		i;
 	char	***charmap;
@@ -186,18 +222,29 @@ t_crd	*createmap(char *filename)
 		++i;
 	}
 	map->crd[map->size_x] = NULL;
+	ft_free_t((void ***)charmap);
 	return (map);
+}
+
+void	*free_crd(t_crd	*crd)
+{
+	ft_free_d((void **)(crd->crd));
+	free(crd);
 }
 
 int	main(void)
 {
 	t_crd	*crd;
 
-	crd = createmap("../maps/test_maps/42.fdf");
+	crd = createmap("../maps/test_maps/elem-fract.fdf");
 	for (int i = 0; i < crd->size_x; ++i)
+	{
 		for (int j = 0; j < crd->size_y; ++j)
 		{
-			printf("%d,%d ", crd->crd[i][j]);
+			printf("%d,%d\t", crd->crd[i][j].z, crd->crd[i][j].color);
 		}
+		printf("\n");
+	}
+	free_crd(crd);
 	return (0);
 }

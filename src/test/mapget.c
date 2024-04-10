@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mapget.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: polenyc <polenyc@student.42.fr>            +#+  +:+       +#+        */
+/*   By: blackrider <blackrider@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/01 20:55:16 by blackrider        #+#    #+#             */
-/*   Updated: 2024/04/04 10:20:37 by polenyc          ###   ########.fr       */
+/*   Updated: 2024/04/10 13:40:28 by blackrider       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,8 +43,7 @@ t_map	*sett_map(t_map *data, char *str, int x, int y)
 	data->z = ft_atoi(*tmp);
 	if (!(*(tmp + 1)))
 	{
-		freedub
-	((void **)tmp);
+		freedub((void **)tmp);
 		return (data);
 	}
 	if (**(tmp + 1) == '0' && !ft_isdigit(*(*(tmp + 1) + 1)))
