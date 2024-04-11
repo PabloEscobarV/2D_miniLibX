@@ -6,7 +6,7 @@
 /*   By: polenyc <polenyc@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/10 20:09:11 by blackrider        #+#    #+#             */
-/*   Updated: 2024/04/11 14:13:57 by polenyc          ###   ########.fr       */
+/*   Updated: 2024/04/11 14:53:11 by polenyc          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,10 +120,11 @@ void	brensenhem(t_mlxdata *app, float x, float y, int x_f, int y_f)
 	float			dy;
 	float			max;
 
-	if (app->map->crd[(int)y][(int)x].z)
-		color = rgbcolor(255, 0, 0);
-	else
-		color = rgbcolor(0, 0, 0);
+	// if (app->map->crd[(int)y][(int)x].z)
+	// 	color = rgbcolor(255, 0, 0);
+	// else
+	// 	color = rgbcolor(0, 255, 0);
+	color = rgbcolor(255, 0, 0);
 	x *= app->scale;
 	y *= app->scale;
 	x_f *= app->scale;
@@ -170,20 +171,18 @@ void	drawmap(t_mlxdata *app)
 {
 	int		x;
 	int		y;
-	t_crd	*crd;
 
 	if (!app)
 		return ;
-	crd = crt_crd(0, 0, 0, 0);
 	y = 0;
-	while (y < app->map->size_y)
+	while (y < app->map->size_y + 1)
 	{
 		x = 0;
-		while (x < app->map->size_x)
+		while (x < app->map->size_x + 1)
 		{
-			if (x < app->map->size_x - 1)
+			if (x < app->map->size_x)
 				brensenhem(app, x, y, x + 1, y);
-			if (y < app->map->size_y - 1)
+			if (y < app->map->size_y)
 				brensenhem(app, x, y, x, y + 1);
 			++x;
 		}
@@ -200,7 +199,7 @@ int	main(void)
 	t_crd		*crd;
 
 	scale = 20;
-	app = crt_mlxdata("../maps/test_maps/42.fdf", scale * 2);
+	app = crt_mlxdata("../maps/test_maps/test.fdf", scale * 2);
 	crd = scale_crd(crt_crd(0, 10, 10, 10), scale);
 	// brensenhem(app, crd);
 	drawmap(app);
