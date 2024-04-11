@@ -6,7 +6,7 @@
 /*   By: blackrider <blackrider@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/01 20:56:21 by blackrider        #+#    #+#             */
-/*   Updated: 2024/04/10 21:26:24 by blackrider       ###   ########.fr       */
+/*   Updated: 2024/04/11 11:57:12 by blackrider       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 #define	TITLE		"FdF"
 #define	MAX(a, b)	(a > b ? a : b)
 #define	MIN(a, b)	(a < b ? a : b)
+#define MOD(a) 		((a < 0) ? -a : a)
 
 typedef unsigned char t_uchr;
 
