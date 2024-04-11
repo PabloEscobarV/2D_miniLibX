@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fdf.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: blackrider <blackrider@student.42.fr>      +#+  +:+       +#+        */
+/*   By: polenyc <polenyc@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/01 20:56:21 by blackrider        #+#    #+#             */
-/*   Updated: 2024/04/11 11:57:12 by blackrider       ###   ########.fr       */
+/*   Updated: 2024/04/11 13:57:41 by polenyc          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,14 @@
 #define MOD(a) 		((a < 0) ? -a : a)
 
 typedef unsigned char t_uchr;
+
+typedef struct 
+{
+	float	x;
+	float	y;
+	int		x_f;
+	int		y_f;
+}			t_crd;
 
 typedef struct
 {
@@ -60,6 +68,7 @@ typedef	struct s_mlximg
 
 typedef struct	s_mlxdata
 {
+	int			scale;
 	void		*app;
 	void		*wnd;
 	t_mlximg	*img;

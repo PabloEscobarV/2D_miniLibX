@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mapform.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: blackrider <blackrider@student.42.fr>      +#+  +:+       +#+        */
+/*   By: polenyc <polenyc@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 13:21:21 by polenyc           #+#    #+#             */
-/*   Updated: 2024/04/10 20:37:16 by blackrider       ###   ########.fr       */
+/*   Updated: 2024/04/11 12:56:06 by polenyc          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,9 +79,9 @@ t_mapd	*crtmapd(char **mapchar, t_map *map)
 	char	**tmp;
 	t_mapd	*data;
 
-	if (map->size_y != sizematrix(mapchar))
+	if (map->size_x != sizematrix(mapchar))
 		return (NULL);
-	data = malloc(map->size_y * sizeof(t_mapd));
+	data = malloc(map->size_x * sizeof(t_mapd));
 	if (!data)
 		return (NULL);
 	i = 0;
@@ -106,16 +106,16 @@ t_map	*createmap(const char *filename)
 	map = malloc(sizeof(t_map));
 	if (!map)
 		return (NULL);
-	map->size_y = sizematrix(*charmap);
-	map->size_x = tda_size(charmap);
-	map->crd = malloc((map->size_x + 1) * sizeof(t_mapd *));
+	map->size_x = sizematrix(*charmap);
+	map->size_y = tda_size(charmap);
+	map->crd = malloc((map->size_y + 1) * sizeof(t_mapd *));
 	i = 0;
-	while (i < map->size_x)
+	while (i < map->size_y)
 	{
 		map->crd[i] = crtmapd(charmap[i], map);
 		++i;
 	}
-	map->crd[map->size_x] = NULL;
+	map->crd[map->size_y] = NULL;
 	ft_free_t((void ***)charmap);
 	return (map);
 }
@@ -125,9 +125,9 @@ t_map	*createmap(const char *filename)
 // 	t_map	*crd;
 
 // 	crd = createmap("../maps/test_maps/50-4.fdf");
-// 	for (int i = 0; i < crd->size_x; ++i)
+// 	for (int i = 0; i < crd->size_y; ++i)
 // 	{
-// 		for (int j = 0; j < crd->size_y; ++j)
+// 		for (int j = 0; j < crd->size_x; ++j)
 // 		{
 // 			printf("%d,%d\t", crd->crd[i][j].z, crd->crd[i][j].color);
 // 		}

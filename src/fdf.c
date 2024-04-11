@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fdf.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: blackrider <blackrider@student.42.fr>      +#+  +:+       +#+        */
+/*   By: polenyc <polenyc@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/10 20:09:11 by blackrider        #+#    #+#             */
-/*   Updated: 2024/04/11 12:38:51 by blackrider       ###   ########.fr       */
+/*   Updated: 2024/04/11 14:13:57 by polenyc          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,8 +56,8 @@ t_mlxdata	*crt_mlxdata(const char *filename, int scale)
 	data->map = createmap(filename);
 	if (!(data->map))
 		return (ft_free_mlxdata(data));
-	data->wnd = mlx_new_window(data->app, MAX(SIZE_X, data->map->size_x * 3 *
-		scale), MAX(SIZE_Y, data->map->size_y * 3 * scale), TITLE);
+	data->wnd = mlx_new_window(data->app, MIN(SIZE_X, data->map->size_x * 3 *
+		scale), MIN(SIZE_Y, data->map->size_y * 3 * scale), TITLE);
 	data->img = malloc(sizeof(t_mlximg));
 	if (!(data->wnd) || !(data->img))
 		return (ft_free_mlxdata(data));
@@ -67,6 +67,7 @@ t_mlxdata	*crt_mlxdata(const char *filename, int scale)
 		&data->img->bits_per_pixel, &data->img->size_line, &data->img->endian);
 	if (!(data->img->img_ptr) || !(data->img->img_pixels))
 		return (ft_free_mlxdata(data));
+	data->scale = scale;
 	return (data);
 }
 
@@ -90,29 +91,104 @@ void	setpixel(t_mlxdata *app, int x, int y, int color)
 	*(unsigned int *)(offset + app->img->img_pixels) = color;
 }
 
-int		brensenhem(t_mlxdata *app, float x, float y, float scale)
-{
-	float	dx;
-	float	dy;
-	float	max;
+// void	brensenhem(t_mlxdata *app, t_crd *crd)
+// {
+// 	float	dx;
+// 	float	dy;
+// 	float	max;
 
-	x *= scale;
-	y *= scale;
-	app->map->size_x *= scale;
-	app->map->size_y *= scale;
-	dx = (float)((app->map->size_x - 1.0) - x);
-	dy = (float)((app->map->size_y - 1.0) - y);
+// 	dx = crd->x_f - crd->x;
+// 	dy = crd->y_f - crd->y;
+// 	max = MAX(MOD(dx), MOD(dy));
+// 	dx /= max;
+// 	dy /= max;
+// 	while ((int)(crd->x_f - crd->x) || (int)(crd->y_f - crd->y))
+// 	{
+// 		setpixel(app, crd->x, crd->y, rgbcolor(255, 0, 0));
+// 		// mlx_pixel_put(app->app, app->wnd, crd->x, crd->y, rgbcolor(255, 0, 0));
+// 		crd->x += dx;
+// 		crd->y += dy;
+// 	}
+// 	// mlx_clear_window(app->app, app->wnd);
+// 	// mlx_put_image_to_window(app->app, app->wnd, app->img->img_ptr, 0, 0);
+// }
+
+void	brensenhem(t_mlxdata *app, float x, float y, int x_f, int y_f)
+{
+	int				color;
+	float			dx;
+	float			dy;
+	float			max;
+
+	if (app->map->crd[(int)y][(int)x].z)
+		color = rgbcolor(255, 0, 0);
+	else
+		color = rgbcolor(0, 0, 0);
+	x *= app->scale;
+	y *= app->scale;
+	x_f *= app->scale;
+	y_f *= app->scale;
+	dx = x_f - x;
+	dy = y_f - y;
 	max = MAX(MOD(dx), MOD(dy));
 	dx /= max;
 	dy /= max;
-	while ((int)(app->map->size_x - x) || (int)(app->map->size_y - y))
+	while ((int)(x_f - x) || (int)(y_f - y))
 	{
-		setpixel(app, x, y, rgbcolor(255, 0, 0));
+		setpixel(app, x, y, color);
 		x += dx;
 		y += dy;
 	}
-	app->map->size_x /= scale;
-	app->map->size_y /= scale;
+}
+
+t_crd	*crt_crd(int x, int y, int x_f, int y_f)
+{
+	t_crd	*tmp;
+
+	tmp = malloc(sizeof(t_crd));
+	if (!tmp)
+		return (NULL);
+	tmp->x = (float)x;
+	tmp->y = (float)y;
+	tmp->x_f = x_f;
+	tmp->y_f = y_f;
+	return (tmp);
+}
+
+t_crd	*scale_crd(t_crd *crd, int scale)
+{
+	if (!crd)
+		return (NULL);
+	crd->x *= (float)scale;
+	crd->y *= (float)scale;
+	crd->x_f *= scale;
+	crd->y_f *= scale;
+	return (crd);
+}
+
+void	drawmap(t_mlxdata *app)
+{
+	int		x;
+	int		y;
+	t_crd	*crd;
+
+	if (!app)
+		return ;
+	crd = crt_crd(0, 0, 0, 0);
+	y = 0;
+	while (y < app->map->size_y)
+	{
+		x = 0;
+		while (x < app->map->size_x)
+		{
+			if (x < app->map->size_x - 1)
+				brensenhem(app, x, y, x + 1, y);
+			if (y < app->map->size_y - 1)
+				brensenhem(app, x, y, x, y + 1);
+			++x;
+		}
+		++y;
+	}
 	mlx_clear_window(app->app, app->wnd);
 	mlx_put_image_to_window(app->app, app->wnd, app->img->img_ptr, 0, 0);
 }
@@ -121,10 +197,13 @@ int	main(void)
 {
 	int			scale;
 	t_mlxdata	*app;
+	t_crd		*crd;
 
 	scale = 20;
-	app = crt_mlxdata("../maps/test_maps/42.fdf", scale);
-	brensenhem(app, 0, 0, scale);
+	app = crt_mlxdata("../maps/test_maps/42.fdf", scale * 2);
+	crd = scale_crd(crt_crd(0, 10, 10, 10), scale);
+	// brensenhem(app, crd);
+	drawmap(app);
 	mlx_hook(app->wnd, 17, 1L<<3, exitapp, app);
 	mlx_loop(app->app);
 	return (0);
