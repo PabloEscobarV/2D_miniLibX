@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fdf.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: polenyc <polenyc@student.42.fr>            +#+  +:+       +#+        */
+/*   By: blackrider <blackrider@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/01 20:56:21 by blackrider        #+#    #+#             */
-/*   Updated: 2024/04/11 13:57:41 by polenyc          ###   ########.fr       */
+/*   Updated: 2024/04/11 20:49:23 by blackrider       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,12 +26,18 @@
 
 typedef unsigned char t_uchr;
 
+typedef struct
+{
+	float	xscale;
+	float	yscale;
+}			t_scale;
+
 typedef struct 
 {
 	float	x;
 	float	y;
-	int		x_f;
-	int		y_f;
+	int		xf;
+	int		yf;
 }			t_crd;
 
 typedef struct
@@ -68,11 +74,11 @@ typedef	struct s_mlximg
 
 typedef struct	s_mlxdata
 {
-	int			scale;
 	void		*app;
 	void		*wnd;
 	t_mlximg	*img;
 	t_map		*map;
+	t_scale		*sc;
 }				t_mlxdata;
 
 // typedef struct s_mlxdata
