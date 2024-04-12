@@ -6,7 +6,7 @@
 /*   By: blackrider <blackrider@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/01 20:56:21 by blackrider        #+#    #+#             */
-/*   Updated: 2024/04/11 20:49:23 by blackrider       ###   ########.fr       */
+/*   Updated: 2024/04/12 10:40:45 by blackrider       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,8 @@ typedef struct
 {
 	float	x;
 	float	y;
-	int		xf;
-	int		yf;
+	float	xf;
+	float	yf;
 }			t_crd;
 
 typedef struct
@@ -52,14 +52,6 @@ typedef struct
 	size_t	size_y;
 	t_mapd	**crd;
 }			t_map;
-
-// typedef	struct s_map
-// {
-// 	int		x;
-// 	int		y;
-// 	int		z;
-// 	long	color;
-// }			t_map;
 
 typedef	struct s_mlximg
 {
@@ -81,22 +73,27 @@ typedef struct	s_mlxdata
 	t_scale		*sc;
 }				t_mlxdata;
 
-// typedef struct s_mlxdata
-// {
-// 	void		*app;
-// 	void		*mlxwindow;
-// 	t_mlximg	*img;
-// 	t_mlximg	*wall;
-// 	t_mlximg	*pacman;
-// 	t_mlximg	*enemy;
-// }				t_mlxdata;
 
 t_map	*createmap(const char *filename);
+////////////////////////////////CRT_APP//////////////////////////////
+t_mlxdata	*newmlxdata();
+t_mlxdata	*crt_mlxdata(t_map *map, t_scale *sc);
+void		*ft_free_mlxdata(t_mlxdata	*data);
+int			exitapp(void *app);
+////////////////////////////////MLX_TOOLS//////////////////////////////
+int			rgbcolor(t_uchr red, t_uchr blue, t_uchr green);
+void		setpixel(t_mlxdata *app, int x, int y, int color);
+void		isometric(float *x, float *y, int z);
+long		setcolor(t_mlxdata *app, int x, int y, int xf, int yf);
+void		setvenue(t_mlxdata *app, float *x, float *y, float *xf, float *yf);
 ////////////////////////////////TOOLS//////////////////////////////
-void	*free_map(t_map	*crd);
-long	tda_size(char ***map);
-int		sizematrix(char **mapstr);
+void		*free_map(t_map	*crd);
+long		tda_size(char ***map);
+int			sizematrix(char **mapstr);
 ////////////////////////////////T_MAPD//////////////////////////////
-t_mapd  *create_mapd(long z, long color);
-// ////////////////////////////////MAPTTOSTR//////////////////////////////
+t_mapd  	*create_mapd(long z, long color);
+// ////////////////////////////////T_CRD//////////////////////////////
+t_crd		*crt_crd(int x, int y, int xf, int yf);
+void    	scale_crd(t_crd *crd, int scale);
+void		setcrd_xy(t_crd *crd, int x, int y, t_uchr i);
 // char	*maptostr(char *filename);
