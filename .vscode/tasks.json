@@ -21,6 +21,7 @@
                 "-lmlx_Linux",
                 "-lX11",
                 "-lXext",
+                "-lm",
                 "-o",
                 "${fileDirname}/${fileBasenameNoExtension}"
             ],

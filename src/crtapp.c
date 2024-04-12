@@ -6,7 +6,7 @@
 /*   By: polenyc <polenyc@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 10:34:25 by blackrider        #+#    #+#             */
-/*   Updated: 2024/04/12 12:11:09 by polenyc          ###   ########.fr       */
+/*   Updated: 2024/04/12 12:15:21 by polenyc          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,4 +76,16 @@ int	exitapp(void *app)
 	ft_free_mlxdata((t_mlxdata *)app);
 	exit(0);
 	return (0);
+}
+
+t_mapd	*create_mapd(long z, long color)
+{
+	t_mapd	*tmp;
+
+	tmp = malloc(sizeof(t_mapd));
+	if (!tmp)
+		return (NULL);
+	tmp->z = z;
+	tmp->color = color;
+	return (tmp);
 }

@@ -6,7 +6,7 @@
 /*   By: polenyc <polenyc@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/01 20:56:21 by blackrider        #+#    #+#             */
-/*   Updated: 2024/04/12 11:59:03 by polenyc          ###   ########.fr       */
+/*   Updated: 2024/04/12 12:22:54 by polenyc          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,31 +16,27 @@
 #include <fcntl.h>
 #include <unistd.h>
 
-#define	HEX_FDF 	"0123456789ABCDEF"
+#define HEX_FDF 	"0123456789ABCDEF"
 #define SIZE_X 		2500
 #define SIZE_Y 		1500
-#define	TITLE		"FdF"
-#define	MAX(a, b)	(a > b ? a : b)
-#define	MIN(a, b)	(a < b ? a : b)
-#define MOD(a) 		((a < 0) ? -a : a)
+#define TITLE		"FdF"
 
-typedef unsigned char t_uchr;
+typedef unsigned char	t_uchr;
 
-typedef struct
+typedef struct s_dt
 {
 	float	dx;
 	float	dy;
 	float	max;
 }			t_dt;
 
-
-typedef struct
+typedef struct s_scale
 {
 	float	xscale;
 	float	yscale;
 }			t_scale;
 
-typedef struct 
+typedef struct s_crd
 {
 	float	x;
 	float	y;
@@ -48,20 +44,20 @@ typedef struct
 	float	yf;
 }			t_crd;
 
-typedef struct
+typedef struct s_mapd
 {
 	long	z;
 	long	color;
 }			t_mapd;
 
-typedef struct
+typedef struct s_map
 {
 	size_t	size_x;
 	size_t	size_y;
 	t_mapd	**crd;
 }			t_map;
 
-typedef	struct s_mlximg
+typedef struct s_mlximg
 {
 	void	*img_ptr;
 	char	*img_pixels;
@@ -72,7 +68,7 @@ typedef	struct s_mlximg
 	int		img_height;
 }				t_mlximg;
 
-typedef struct	s_mlxdata
+typedef struct s_mlxdata
 {
 	void		*app;
 	void		*wnd;
@@ -81,10 +77,9 @@ typedef struct	s_mlxdata
 	t_scale		*sc;
 }				t_mlxdata;
 
-
-t_map	*createmap(const char *filename);
+t_map		*createmap(const char *filename);
 ////////////////////////////////CRT_APP//////////////////////////////
-t_mlxdata	*newmlxdata();
+t_mlxdata	*newmlxdata(void);
 t_mlxdata	*crt_mlxdata(t_map *map, t_scale *sc);
 void		*ft_free_mlxdata(t_mlxdata	*data);
 int			exitapp(void *app);
@@ -99,9 +94,9 @@ void		*free_map(t_map	*crd);
 long		tda_size(char ***map);
 int			sizematrix(char **mapstr);
 ////////////////////////////////T_MAPD//////////////////////////////
-t_mapd  	*create_mapd(long z, long color);
+t_mapd		*create_mapd(long z, long color);
 // ////////////////////////////////T_CRD//////////////////////////////
 t_crd		*crt_crd(int x, int y, int xf, int yf);
-void    	scale_crd(t_crd *crd, t_scale *sc);
+void		scale_crd(t_crd *crd, t_scale *sc);
 t_crd		*setcrd_xy(t_crd *crd, int x, int y, t_uchr i);
 // char	*maptostr(char *filename);

@@ -6,7 +6,7 @@
 /*   By: polenyc <polenyc@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/10 20:09:11 by blackrider        #+#    #+#             */
-/*   Updated: 2024/04/12 12:04:03 by polenyc          ###   ########.fr       */
+/*   Updated: 2024/04/12 12:19:07 by polenyc          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	brensenhem(t_mlxdata *app, t_crd *crd)
 	setvenue(app, crd);
 	dt.dx = crd->xf - crd->x;
 	dt.dy = crd->yf - crd->y;
-	dt.max = MAX(MOD(dt.dx), MOD(dt.dy));
+	dt.max = fmax(fabs(dt.dx), fabs(dt.dy));
 	dt.dx /= dt.max;
 	dt.dy /= dt.max;
 	while ((int)(crd->xf - crd->x) || (int)(crd->yf - crd->y))
@@ -85,7 +85,7 @@ int	main(void)
 	t_map		*map;
 	t_mlxdata	*app;
 
-	map = createmap("../maps/test_maps/42.fdf");
+	map = createmap("../maps/test_maps/t1.fdf");
 	scale = crtscale(map, SIZE_X, SIZE_Y, 2);
 	app = crt_mlxdata(map, scale);
 	drawmap(app);

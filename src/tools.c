@@ -6,7 +6,7 @@
 /*   By: polenyc <polenyc@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/10 14:46:37 by blackrider        #+#    #+#             */
-/*   Updated: 2024/04/12 12:03:23 by polenyc          ###   ########.fr       */
+/*   Updated: 2024/04/12 12:23:13 by polenyc          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,16 +40,4 @@ int	sizematrix(char **mapstr)
 	while (mapstr[size])
 		++size;
 	return (size);
-}
-
-t_mapd	*create_mapd(long z, long color)
-{
-	t_mapd	*tmp;
-
-	tmp = malloc(sizeof(t_mapd));
-	if (!tmp)
-		return (NULL);
-	tmp->z = z;
-	tmp->color = color;
-	return (tmp);
 }
