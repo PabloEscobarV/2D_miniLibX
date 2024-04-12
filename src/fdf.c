@@ -6,7 +6,7 @@
 /*   By: blackrider <blackrider@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/10 20:09:11 by blackrider        #+#    #+#             */
-/*   Updated: 2024/04/12 10:39:13 by blackrider       ###   ########.fr       */
+/*   Updated: 2024/04/12 11:49:04 by blackrider       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,35 +15,30 @@
 #include <stdio.h>
 #include <math.h>
 
-void	brensenhem(t_mlxdata *app, float x, float y, float xf, float yf)
+void	brensenhem(t_mlxdata *app, t_crd *crd)
 {
 	long			color;
-	float			dx;
-	float			dy;
-	float			max;
 	int				z;
-	int				z_f;
+	int				z1;
+	t_dt			dt;
 
-	z = app->map->crd[(int)y][(int)x].z;
-	z_f = app->map->crd[(int)yf][(int)xf].z;
-	color = setcolor(app, x, y, xf, yf);
-	x *= app->sc->xscale;
-	y *= app->sc->yscale;
-	xf *= app->sc->xscale;
-	yf *= app->sc->yscale;
-	isometric(&x, &y, z);
-	isometric(&xf, &yf, z_f);
-	setvenue(app, &x, &y, &xf, &yf);
-	dx = xf - x;
-	dy = yf - y;
-	max = MAX(MOD(dx), MOD(dy));
-	dx /= max;
-	dy /= max;
-	while ((int)(xf - x) || (int)(yf - y))
+	z = app->map->crd[(int)(crd->y)][(int)(crd->x)].z;
+	z1 = app->map->crd[(int)(crd->yf)][(int)(crd->xf)].z;
+	color = setcolor(app, crd);
+	scale_crd(crd, app->sc);
+	isometric(&crd->x, &crd->y, z);
+	isometric(&crd->xf, &crd->yf, z1);
+	setvenue(app, crd);
+	dt.dx = crd->xf - crd->x;
+	dt.dy = crd->yf - crd->y;
+	dt.max = MAX(MOD(dt.dx), MOD(dt.dy));
+	dt.dx /= dt.max;
+	dt.dy /= dt.max;
+	while ((int)(crd->xf - crd->x) || (int)(crd->yf - crd->y))
 	{
-		setpixel(app, x, y, color);
-		x += dx;
-		y += dy;
+		setpixel(app, crd->x, crd->y, color);
+		crd->x += dt.dx;
+		crd->y += dt.dy;
 	}
 }
 
@@ -51,11 +46,10 @@ void	drawmap(t_mlxdata *app)
 {
 	int		x;
 	int		y;
-	t_crd	*crd;
+	t_crd	crd;
 
 	if (!app)
 		return ;
-	crd = crt_crd(0, 0, 0, 0);
 	y = 0;
 	while (y < app->map->size_y)
 	{
@@ -63,9 +57,9 @@ void	drawmap(t_mlxdata *app)
 		while (x < app->map->size_x)
 		{
 			if (x < app->map->size_x - 1)
-				brensenhem(app, x, y, x + 1, y);
+				brensenhem(app, setcrd_xy(&crd, x, y, 0));
 			if (y < app->map->size_y - 1)
-				brensenhem(app, x, y, x, y + 1);
+				brensenhem(app, setcrd_xy(&crd, x, y, 1));
 			++x;
 		}
 		++y;
@@ -91,7 +85,7 @@ int	main(void)
 	t_map		*map;
 	t_mlxdata	*app;
 
-	map = createmap("../maps/test_maps/42.fdf");
+	map = createmap("../maps/test_maps/t1.fdf");
 	scale = crtscale(map, SIZE_X, SIZE_Y, 2);
 	app = crt_mlxdata(map, scale);
 	drawmap(app);

@@ -6,7 +6,7 @@
 /*   By: blackrider <blackrider@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/01 20:56:21 by blackrider        #+#    #+#             */
-/*   Updated: 2024/04/12 10:40:45 by blackrider       ###   ########.fr       */
+/*   Updated: 2024/04/12 11:40:40 by blackrider       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,14 @@
 #define MOD(a) 		((a < 0) ? -a : a)
 
 typedef unsigned char t_uchr;
+
+typedef struct
+{
+	float	dx;
+	float	dy;
+	float	max;
+}			t_dt;
+
 
 typedef struct
 {
@@ -84,8 +92,8 @@ int			exitapp(void *app);
 int			rgbcolor(t_uchr red, t_uchr blue, t_uchr green);
 void		setpixel(t_mlxdata *app, int x, int y, int color);
 void		isometric(float *x, float *y, int z);
-long		setcolor(t_mlxdata *app, int x, int y, int xf, int yf);
-void		setvenue(t_mlxdata *app, float *x, float *y, float *xf, float *yf);
+long		setcolor(t_mlxdata *app, t_crd *crd);
+void		setvenue(t_mlxdata *app, t_crd *crd);
 ////////////////////////////////TOOLS//////////////////////////////
 void		*free_map(t_map	*crd);
 long		tda_size(char ***map);
@@ -94,6 +102,6 @@ int			sizematrix(char **mapstr);
 t_mapd  	*create_mapd(long z, long color);
 // ////////////////////////////////T_CRD//////////////////////////////
 t_crd		*crt_crd(int x, int y, int xf, int yf);
-void    	scale_crd(t_crd *crd, int scale);
-void		setcrd_xy(t_crd *crd, int x, int y, t_uchr i);
+void    	scale_crd(t_crd *crd, t_scale *sc);
+t_crd		*setcrd_xy(t_crd *crd, int x, int y, t_uchr i);
 // char	*maptostr(char *filename);

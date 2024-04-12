@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   t_crd._tools.c                                     :+:      :+:    :+:   */
+/*   t_crd_tools.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: blackrider <blackrider@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 10:31:40 by blackrider        #+#    #+#             */
-/*   Updated: 2024/04/12 10:33:30 by blackrider       ###   ########.fr       */
+/*   Updated: 2024/04/12 11:34:40 by blackrider       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,26 +26,29 @@ t_crd	*crt_crd(int x, int y, int xf, int yf)
 	return (tmp);
 }
 
-void    scale_crd(t_crd *crd, int scale)
+void    scale_crd(t_crd *crd, t_scale *sc)
 {
 	if (!crd)
 		return ;
-	crd->x *= (float)scale;
-	crd->y *= (float)scale;
-	crd->xf *= (float)scale;
-	crd->yf *= (float)scale;
+	crd->x *= sc->xscale;
+	crd->y *= sc->yscale;
+	crd->xf *= sc->xscale;
+	crd->yf *= sc->yscale;
 }
 
-void	setcrd_xy(t_crd *crd, int x, int y, t_uchr i)
+t_crd	*setcrd_xy(t_crd *crd, int x, int y, t_uchr i)
 {
-    if (!crd)
-		return ;
 	if (i)
 	{
+		crd->x = (float)x;
+		crd->y = (float)y;
 		crd->xf = (float)x;
-		crd->yf = (float)y;
-		return ;
+		crd->yf = (float)y + 1;
+		return (crd);
 	}
 	crd->x = (float)x;
 	crd->y = (float)y;
+	crd->xf = (float)x + 1;
+	crd->yf = (float)y;
+	return (crd);
 }

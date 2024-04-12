@@ -6,7 +6,7 @@
 /*   By: blackrider <blackrider@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 10:34:25 by blackrider        #+#    #+#             */
-/*   Updated: 2024/04/12 10:37:15 by blackrider       ###   ########.fr       */
+/*   Updated: 2024/04/12 11:53:16 by blackrider       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ void		*ft_free_mlxdata(t_mlxdata	*data)
 	free_map(data->map);
 	free(data->img);
 	free(data->app);
+	free(data->sc);
 	free(data);
 	return (NULL);
 }
