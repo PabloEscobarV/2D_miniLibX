@@ -6,7 +6,7 @@
 /*   By: polenyc <polenyc@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 13:21:21 by polenyc           #+#    #+#             */
-/*   Updated: 2024/04/12 13:14:07 by polenyc          ###   ########.fr       */
+/*   Updated: 2024/04/12 13:19:26 by polenyc          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,6 +117,11 @@ t_map	*createmap(const char *filename)
 	while (i < (int)map->size_y)
 	{
 		map->crd[i] = crtmapd(charmap[i], map);
+		if (!map->crd[i])
+		{
+			ft_free_t((void ***)charmap);
+			return (free_map(map));
+		}
 		++i;
 	}
 	map->crd[map->size_y] = NULL;
