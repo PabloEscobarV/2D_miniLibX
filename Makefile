@@ -16,7 +16,7 @@ CC = gcc
 CFLAG = -Wall -Wextra -Werror
 CLIBFLAFGS = -L$(GNLDIR) -l$(GNL) -L$(LIBFTDIR) -l$(LIBFT) -L$(MLXDIR) -l$(MLX) -lX11 -lXext -lm
 
-.PHONY: all, bonus, clean, fclean, re
+.PHONY: all, bonus, clean, fclean, clean_re, re
 
 all: $(NAME)
 
@@ -48,6 +48,9 @@ fclean:
 	$(MAKE) -C $(LIBFTDIR) fclean
 	rm -rf $(OBJDIR) $(NAME)
 
-re: fclean all
+clean_re:
+	rm -rf $(OBJDIR) $(NAME)
+
+re: clean_re all
 
 

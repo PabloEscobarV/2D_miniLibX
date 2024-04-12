@@ -3,15 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   mlx_tools.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: polenyc <polenyc@student.42.fr>            +#+  +:+       +#+        */
+/*   By: blackrider <blackrider@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 10:38:10 by blackrider        #+#    #+#             */
-/*   Updated: 2024/04/12 12:11:37 by polenyc          ###   ########.fr       */
+/*   Updated: 2024/04/12 22:16:35 by blackrider       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../hdrs/fdf.h"
 #include <math.h>
+#include <stdio.h>
 
 int	rgbcolor(t_uchr red, t_uchr blue, t_uchr green)
 {
@@ -26,10 +27,10 @@ void	setpixel(t_mlxdata *app, int x, int y, int color)
 	*(unsigned int *)(offset + app->img->img_pixels) = color;
 }
 
-void	isometric(float *x, float *y, int z)
+void	isometric(t_mlxdata *app, float *x, float *y, int z)
 {
-	*x = (*x - *y) * cos(0.75);
-	*y = ((*x + *y) * sin(0.75) - z);
+	*x = (*x - *y) * cos(0.8);
+	*y = (*x + *y) * sin(0.8) - z * app->sc->k;
 }
 
 long	setcolor(t_mlxdata *app, t_crd *crd)

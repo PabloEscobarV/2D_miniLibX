@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fdf.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: polenyc <polenyc@student.42.fr>            +#+  +:+       +#+        */
+/*   By: blackrider <blackrider@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/01 20:56:21 by blackrider        #+#    #+#             */
-/*   Updated: 2024/04/12 12:22:54 by polenyc          ###   ########.fr       */
+/*   Updated: 2024/04/12 22:53:03 by blackrider       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,8 @@
 #include <unistd.h>
 
 #define HEX_FDF 	"0123456789ABCDEF"
-#define SIZE_X 		2500
-#define SIZE_Y 		1500
+#define SIZE_X 		1900
+#define SIZE_Y 		1000
 #define TITLE		"FdF"
 
 typedef unsigned char	t_uchr;
@@ -32,6 +32,7 @@ typedef struct s_dt
 
 typedef struct s_scale
 {
+	float	k;
 	float	xscale;
 	float	yscale;
 }			t_scale;
@@ -86,7 +87,7 @@ int			exitapp(void *app);
 ////////////////////////////////MLX_TOOLS//////////////////////////////
 int			rgbcolor(t_uchr red, t_uchr blue, t_uchr green);
 void		setpixel(t_mlxdata *app, int x, int y, int color);
-void		isometric(float *x, float *y, int z);
+void		isometric(t_mlxdata *app, float *x, float *y, int z);
 long		setcolor(t_mlxdata *app, t_crd *crd);
 void		setvenue(t_mlxdata *app, t_crd *crd);
 ////////////////////////////////TOOLS//////////////////////////////
