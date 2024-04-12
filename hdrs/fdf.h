@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fdf.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: blackrider <blackrider@student.42.fr>      +#+  +:+       +#+        */
+/*   By: polenyc <polenyc@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/01 20:56:21 by blackrider        #+#    #+#             */
-/*   Updated: 2024/04/12 11:40:40 by blackrider       ###   ########.fr       */
+/*   Updated: 2024/04/12 11:59:03 by polenyc          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,8 @@
 #include <unistd.h>
 
 #define	HEX_FDF 	"0123456789ABCDEF"
-#define SIZE_X 		1850
-#define SIZE_Y 		850
+#define SIZE_X 		2500
+#define SIZE_Y 		1500
 #define	TITLE		"FdF"
 #define	MAX(a, b)	(a > b ? a : b)
 #define	MIN(a, b)	(a < b ? a : b)

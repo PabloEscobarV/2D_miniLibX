@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fdf.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: blackrider <blackrider@student.42.fr>      +#+  +:+       +#+        */
+/*   By: polenyc <polenyc@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/10 20:09:11 by blackrider        #+#    #+#             */
-/*   Updated: 2024/04/12 11:49:04 by blackrider       ###   ########.fr       */
+/*   Updated: 2024/04/12 12:04:03 by polenyc          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ void	drawmap(t_mlxdata *app)
 
 t_scale	*crtscale(t_map *map, int size_x, int size_y, float k)
 {
-	t_scale *scale;
+	t_scale	*scale;
 
 	scale = malloc(sizeof(t_scale));
 	scale->xscale = 1 * ((float)size_x / k) / (float)(map->size_x);
@@ -85,11 +85,11 @@ int	main(void)
 	t_map		*map;
 	t_mlxdata	*app;
 
-	map = createmap("../maps/test_maps/t1.fdf");
+	map = createmap("../maps/test_maps/42.fdf");
 	scale = crtscale(map, SIZE_X, SIZE_Y, 2);
 	app = crt_mlxdata(map, scale);
 	drawmap(app);
-	mlx_hook(app->wnd, 17, 1L<<3, exitapp, app);
+	mlx_hook(app->wnd, 17, 1L << 3, exitapp, app);
 	mlx_loop(app->app);
 	return (0);
 }

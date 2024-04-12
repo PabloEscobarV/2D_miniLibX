@@ -6,7 +6,7 @@
 /*   By: polenyc <polenyc@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/10 14:46:37 by blackrider        #+#    #+#             */
-/*   Updated: 2024/04/11 12:00:54 by polenyc          ###   ########.fr       */
+/*   Updated: 2024/04/12 12:03:23 by polenyc          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ long	tda_size(char ***map)
 	return (size);
 }
 
-int		sizematrix(char **mapstr)
+int	sizematrix(char **mapstr)
 {
 	int	size;
 
@@ -42,11 +42,11 @@ int		sizematrix(char **mapstr)
 	return (size);
 }
 
-t_mapd  *create_mapd(long z, long color)
+t_mapd	*create_mapd(long z, long color)
 {
-    t_mapd  *tmp;
+	t_mapd	*tmp;
 
-    tmp = malloc(sizeof(t_mapd));
+	tmp = malloc(sizeof(t_mapd));
 	if (!tmp)
 		return (NULL);
 	tmp->z = z;

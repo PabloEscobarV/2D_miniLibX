@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   t_crd_tools.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: blackrider <blackrider@student.42.fr>      +#+  +:+       +#+        */
+/*   By: polenyc <polenyc@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 10:31:40 by blackrider        #+#    #+#             */
-/*   Updated: 2024/04/12 11:34:40 by blackrider       ###   ########.fr       */
+/*   Updated: 2024/04/12 12:05:21 by polenyc          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ t_crd	*crt_crd(int x, int y, int xf, int yf)
 	return (tmp);
 }
 
-void    scale_crd(t_crd *crd, t_scale *sc)
+void	scale_crd(t_crd *crd, t_scale *sc)
 {
 	if (!crd)
 		return ;

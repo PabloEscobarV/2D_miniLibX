@@ -3,17 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   mlx_tools.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: blackrider <blackrider@student.42.fr>      +#+  +:+       +#+        */
+/*   By: polenyc <polenyc@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 10:38:10 by blackrider        #+#    #+#             */
-/*   Updated: 2024/04/12 11:48:40 by blackrider       ###   ########.fr       */
+/*   Updated: 2024/04/12 12:11:37 by polenyc          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../hdrs/fdf.h"
 #include <math.h>
 
-int		rgbcolor(t_uchr red, t_uchr blue, t_uchr green)
+int	rgbcolor(t_uchr red, t_uchr blue, t_uchr green)
 {
 	return (red << 16 | blue << 8 | green);
 }
@@ -39,8 +39,8 @@ long	setcolor(t_mlxdata *app, t_crd *crd)
 	color = app->map->crd[(int)crd->y][(int)crd->x].color;
 	if (color)
 		return (color);
-	if ((app->map->crd[(int)crd->y][(int)crd->x].z ||
-		app->map->crd[(int)crd->yf][(int)crd->xf].z))
+	if ((app->map->crd[(int)crd->y][(int)crd->x].z
+		|| app->map->crd[(int)crd->yf][(int)crd->xf].z))
 		color = rgbcolor(50, 255, 50);
 	else
 		color = rgbcolor(255, 255, 255);

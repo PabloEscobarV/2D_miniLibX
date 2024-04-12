@@ -3,17 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   crtapp.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: blackrider <blackrider@student.42.fr>      +#+  +:+       +#+        */
+/*   By: polenyc <polenyc@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 10:34:25 by blackrider        #+#    #+#             */
-/*   Updated: 2024/04/12 11:53:16 by blackrider       ###   ########.fr       */
+/*   Updated: 2024/04/12 12:11:09 by polenyc          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../hdrs/fdf.h"
 #include "../minilibx-linux/mlx.h"
 
-void		*ft_free_mlxdata(t_mlxdata	*data)
+void	*ft_free_mlxdata(t_mlxdata	*data)
 {
 	if (data->img)
 		mlx_destroy_image(data->app, data->img->img_ptr);
@@ -29,7 +29,7 @@ void		*ft_free_mlxdata(t_mlxdata	*data)
 	return (NULL);
 }
 
-t_mlxdata	*newmlxdata()
+t_mlxdata	*newmlxdata(void)
 {
 	t_mlxdata	*data;
 
@@ -63,14 +63,15 @@ t_mlxdata	*crt_mlxdata(t_map *map, t_scale *sc)
 		return (ft_free_mlxdata(data));
 	data->img->img_ptr = mlx_new_image(data->app, SIZE_X, SIZE_Y);
 	data->img->img_pixels = mlx_get_data_addr(data->img->img_ptr,
-		&data->img->bits_per_pixel, &data->img->size_line, &data->img->endian);
+			&data->img->bits_per_pixel, &data->img->size_line,
+			&data->img->endian);
 	if (!(data->img->img_ptr) || !(data->img->img_pixels))
 		return (ft_free_mlxdata(data));
 	data->sc = sc;
 	return (data);
 }
 
-int			exitapp(void *app)
+int	exitapp(void *app)
 {
 	ft_free_mlxdata((t_mlxdata *)app);
 	exit(0);
