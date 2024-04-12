@@ -6,7 +6,7 @@
 /*   By: blackrider <blackrider@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/10 20:09:11 by blackrider        #+#    #+#             */
-/*   Updated: 2024/04/11 21:53:42 by blackrider       ###   ########.fr       */
+/*   Updated: 2024/04/12 10:21:42 by blackrider       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,8 +62,7 @@ t_mlxdata	*crt_mlxdata(t_map *map, t_scale *sc)
 	data->img = malloc(sizeof(t_mlximg));
 	if (!(data->wnd) || !(data->img))
 		return (ft_free_mlxdata(data));
-	data->img->img_ptr = mlx_new_image(data->app, (data->map->size_x + 1) * sc->xscale,
-		(data->map->size_y + 1) * sc->yscale);
+	data->img->img_ptr = mlx_new_image(data->app, SIZE_X, SIZE_Y);
 	data->img->img_pixels = mlx_get_data_addr(data->img->img_ptr,
 		&data->img->bits_per_pixel, &data->img->size_line, &data->img->endian);
 	if (!(data->img->img_ptr) || !(data->img->img_pixels))
@@ -117,19 +116,28 @@ void	setpixel(t_mlxdata *app, int x, int y, int color)
 void	isometric(float *x, float *y, int z)
 {
 	*x = (*x - *y) * cos(0.8);
-	*y = ((*x + *y) * sin(0.8) - z);
+	*y = ((*x + *y) * sin(0.8) - z * 2);
 }
 
 void	setvenue(t_mlxdata *app, float *x, float *y, float *xf, float *yf)
 {
-	// *x += app->sc->xscale * app->map->size_x;
+	float	xs;
+	float	ys;
+
+	xs = (SIZE_X - app->map->size_x * app->sc->xscale) / (1.3);
+	ys = (SIZE_Y - app->map->size_y * app->sc->yscale) / (2.3);
+	*x += xs;
+	*xf += xs;
+	*y += ys;
+	*yf += ys;
+	// *x += app->sc->xscale * app->map->size_x / (app->map->size_x / app->map->size_y);
 	// *y += app->sc->yscale * app->map->size_y / 15;
-	// *xf += app->sc->xscale * app->map->size_x;
+	// *xf += app->sc->xscale * app->map->size_x / (app->map->size_x / app->map->size_y);
 	// *yf += app->sc->yscale * app->map->size_y / 15;
-	*x += 150;
-	*y += 150;
-	*xf += 150;
-	*yf += 150;
+	// *x += 150;
+	// *y += 150;
+	// *xf += 150;
+	// *yf += 150;
 }
 
 long	setcolor(t_mlxdata *app, int x, int y, int xf, int yf)
@@ -140,9 +148,9 @@ long	setcolor(t_mlxdata *app, int x, int y, int xf, int yf)
 	if (color)
 		return (color);
 	if ((app->map->crd[y][x].z || app->map->crd[yf][xf].z))
-		color = rgbcolor(255, 0, 0);
+		color = rgbcolor(50, 255, 50);
 	else
-		color = rgbcolor(0, 255, 255);
+		color = rgbcolor(255, 255, 255);
 	return (color);
 }
 
@@ -170,7 +178,6 @@ void	brensenhem(t_mlxdata *app, float x, float y, float xf, float yf)
 	max = MAX(MOD(dx), MOD(dy));
 	dx /= max;
 	dy /= max;
-
 	while ((int)(xf - x) || (int)(yf - y))
 	{
 		setpixel(app, x, y, color);
@@ -221,11 +228,9 @@ void	drawmap(t_mlxdata *app)
 				brensenhem(app, x, y, x + 1, y);
 			if (y < app->map->size_y - 1)
 				brensenhem(app, x, y, x, y + 1);
-			// if (x >= 2 && y >= 2)
-			// 	printf("start\n");
 			++x;
-			mlx_clear_window(app->app, app->wnd);
-			mlx_put_image_to_window(app->app, app->wnd, app->img->img_ptr, 0, 0);
+			// mlx_clear_window(app->app, app->wnd);
+			// mlx_put_image_to_window(app->app, app->wnd, app->img->img_ptr, 0, 0);
 		}
 		++y;
 	}
@@ -233,13 +238,13 @@ void	drawmap(t_mlxdata *app)
 	mlx_put_image_to_window(app->app, app->wnd, app->img->img_ptr, 0, 0);
 }
 
-t_scale	*crtscale(t_map *map, int size_x, int size_y)
+t_scale	*crtscale(t_map *map, int size_x, int size_y, float k)
 {
 	t_scale *scale;
 
 	scale = malloc(sizeof(t_scale));
-	scale->xscale = 1 * ((float)size_x / 2.0) / (float)(map->size_x);
-	scale->yscale = 1 * (((float)size_y / 2.0) / (float)(map->size_y));
+	scale->xscale = 1 * ((float)size_x / k) / (float)(map->size_x);
+	scale->yscale = 1 * (((float)size_y / k) / (float)(map->size_y));
 	return (scale);
 }
 
@@ -251,7 +256,7 @@ int	main(void)
 	t_mlxdata	*app;
 
 	map = createmap("../maps/test_maps/42.fdf");
-	scale = crtscale(map, SIZE_X, SIZE_Y);
+	scale = crtscale(map, SIZE_X, SIZE_Y, 2);
 	app = crt_mlxdata(map, scale);
 	drawmap(app);
 	mlx_hook(app->wnd, 17, 1L<<3, exitapp, app);
