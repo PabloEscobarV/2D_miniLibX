@@ -6,7 +6,7 @@
 /*   By: polenyc <polenyc@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 13:21:21 by polenyc           #+#    #+#             */
-/*   Updated: 2024/04/11 12:56:06 by polenyc          ###   ########.fr       */
+/*   Updated: 2024/04/12 12:54:47 by polenyc          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ t_mapd	*crtmapd(char **mapchar, t_map *map)
 	char	**tmp;
 	t_mapd	*data;
 
-	if (map->size_x != sizematrix(mapchar))
+	if ((int)map->size_x != sizematrix(mapchar))
 		return (NULL);
 	data = malloc(map->size_x * sizeof(t_mapd));
 	if (!data)
@@ -110,7 +110,7 @@ t_map	*createmap(const char *filename)
 	map->size_y = tda_size(charmap);
 	map->crd = malloc((map->size_y + 1) * sizeof(t_mapd *));
 	i = 0;
-	while (i < map->size_y)
+	while (i < (int)map->size_y)
 	{
 		map->crd[i] = crtmapd(charmap[i], map);
 		++i;

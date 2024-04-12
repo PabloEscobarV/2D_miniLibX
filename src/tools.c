@@ -6,7 +6,7 @@
 /*   By: polenyc <polenyc@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/10 14:46:37 by blackrider        #+#    #+#             */
-/*   Updated: 2024/04/12 12:23:13 by polenyc          ###   ########.fr       */
+/*   Updated: 2024/04/12 12:55:10 by polenyc          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ void	*free_map(t_map	*crd)
 {
 	ft_free_d((void **)(crd->crd));
 	free(crd);
+	return (NULL);
 }
 
 long	tda_size(char ***map)

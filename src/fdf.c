@@ -6,7 +6,7 @@
 /*   By: polenyc <polenyc@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/10 20:09:11 by blackrider        #+#    #+#             */
-/*   Updated: 2024/04/12 12:19:07 by polenyc          ###   ########.fr       */
+/*   Updated: 2024/04/12 12:56:33 by polenyc          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,14 +51,14 @@ void	drawmap(t_mlxdata *app)
 	if (!app)
 		return ;
 	y = 0;
-	while (y < app->map->size_y)
+	while (y < (int)app->map->size_y)
 	{
 		x = 0;
-		while (x < app->map->size_x)
+		while (x < (int)app->map->size_x)
 		{
-			if (x < app->map->size_x - 1)
+			if (x < (int)app->map->size_x - 1)
 				brensenhem(app, setcrd_xy(&crd, x, y, 0));
-			if (y < app->map->size_y - 1)
+			if (y < (int)app->map->size_y - 1)
 				brensenhem(app, setcrd_xy(&crd, x, y, 1));
 			++x;
 		}
@@ -78,14 +78,15 @@ t_scale	*crtscale(t_map *map, int size_x, int size_y, float k)
 	return (scale);
 }
 
-int	main(void)
+int	main(int argc, char **argv)
 {
-	int			alfa;
 	t_scale		*scale;
 	t_map		*map;
 	t_mlxdata	*app;
 
-	map = createmap("../maps/test_maps/t1.fdf");
+	if (argc != 2)
+		exit(-1);
+	map = createmap(argv[1]);
 	scale = crtscale(map, SIZE_X, SIZE_Y, 2);
 	app = crt_mlxdata(map, scale);
 	drawmap(app);

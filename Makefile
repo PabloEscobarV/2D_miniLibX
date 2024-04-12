@@ -1,38 +1,53 @@
 NAME = fdf
 
+LIBFTDIR = libft
+GNLDIR = get_next_line
+MLXDIR = minilibx-linux
 SRCDIR = src
 OBJDIR = obj
-MINILIBXDIR = minilibx-linux
 
-# SRC = $(wildcard $(SRCDIR)/*.c)
-SRC = src/fdf.c
+SRC = $(wildcard $(SRCDIR)/*.c)
 OBJ = $(patsubst $(SRCDIR)/%.c, $(OBJDIR)/%.o, $(SRC))
+GNL = gnlfull
+LIBFT = ft
+MLX = mlx_Linux
 
 CC = gcc
-CFLAG = -Wall -Wextra
-CMINILIBX = -L$(MINILIBXDIR) -lmlx_Linux -lX11 -lXext
+CFLAG = -Wall -Wextra -Werror
+CLIBFLAFGS = -L$(GNLDIR) -l$(GNL) -L$(LIBFTDIR) -l$(LIBFT) -L$(MLXDIR) -l$(MLX) -lX11 -lXext -lm
 
-.PHONY: all fclean clean re
+.PHONY: all, bonus, clean, fclean, re
 
 all: $(NAME)
 
-clean:
-	$(MAKE) -C $(MINILIBXDIR) clean
-	rm -rf $(OBJDIR)
-
-fclean: clean
-	rm -f $(NAME)
-
-clean_only:
-	rm -rf $(OBJDIR) $(NAME)
-
-re: clean_only $(NAME)
-
-$(NAME): $(OBJ)
-	$(MAKE) -C $(MINILIBXDIR)
-	$(CC) $(OBJ) -Lminilibx-linux/ -lmlx_Linux -lX11 -lXext -o $@
+$(NAME): $(OBJ) $(GNL) $(LIBFT) $(MLX)
+	$(CC) $(CFLAG) $(OBJ) $(CLIBFLAFGS) -o $@
 
 $(OBJDIR)/%.o: $(SRCDIR)/%.c
 	mkdir -p $(OBJDIR)
 	$(CC) -c $(CFLAG) $< -o $@
+
+$(GNL):
+	$(MAKE) -C $(GNLDIR) bonus
+
+$(LIBFT):
+	$(MAKE) -C $(LIBFTDIR)
+
+$(MLX):
+	$(MAKE) -C $(MLXDIR)
+
+clean:
+	$(MAKE) -C $(MLXDIR) clean
+	$(MAKE) -C $(GNLDIR) clean
+	$(MAKE) -C $(LIBFTDIR) clean
+	rm -rf $(OBJDIR)
+
+fclean:
+	$(MAKE) -C $(MLXDIR) clean
+	$(MAKE) -C $(GNLDIR) fclean
+	$(MAKE) -C $(LIBFTDIR) fclean
+	rm -rf $(OBJDIR) $(NAME)
+
+re: fclean all
+
 
