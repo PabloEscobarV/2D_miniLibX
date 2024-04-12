@@ -6,7 +6,7 @@
 /*   By: polenyc <polenyc@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/10 20:09:11 by blackrider        #+#    #+#             */
-/*   Updated: 2024/04/12 12:56:33 by polenyc          ###   ########.fr       */
+/*   Updated: 2024/04/12 13:08:18 by polenyc          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,8 @@ t_scale	*crtscale(t_map *map, int size_x, int size_y, float k)
 {
 	t_scale	*scale;
 
+	if (!map)
+		return (NULL);
 	scale = malloc(sizeof(t_scale));
 	scale->xscale = 1 * ((float)size_x / k) / (float)(map->size_x);
 	scale->yscale = 1 * (((float)size_y / k) / (float)(map->size_y));
@@ -87,6 +89,8 @@ int	main(int argc, char **argv)
 	if (argc != 2)
 		exit(-1);
 	map = createmap(argv[1]);
+	if (!map)
+		exit(-1);
 	scale = crtscale(map, SIZE_X, SIZE_Y, 2);
 	app = crt_mlxdata(map, scale);
 	drawmap(app);

@@ -6,7 +6,7 @@
 /*   By: polenyc <polenyc@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 10:34:25 by blackrider        #+#    #+#             */
-/*   Updated: 2024/04/12 12:15:21 by polenyc          ###   ########.fr       */
+/*   Updated: 2024/04/12 13:08:25 by polenyc          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ t_mlxdata	*crt_mlxdata(t_map *map, t_scale *sc)
 	t_mlxdata	*data;
 
 	data = newmlxdata();
-	if (!data)
+	if (!data || !map || !sc)
 		return (NULL);
 	data->app = mlx_init();
 	if (!(data->app))
