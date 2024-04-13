@@ -6,7 +6,7 @@
 /*   By: blackrider <blackrider@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/10 20:09:11 by blackrider        #+#    #+#             */
-/*   Updated: 2024/04/12 22:55:45 by blackrider       ###   ########.fr       */
+/*   Updated: 2024/04/13 13:37:26 by blackrider       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	brensenhem(t_mlxdata *app, t_crd *crd)
 	scale_crd(crd, app->sc);
 	isometric(app, &crd->x, &crd->y, z);
 	isometric(app, &crd->xf, &crd->yf, z1);
-	setvenue(app, crd);
+	setvenue(crd);
 	dt.dx = crd->xf - crd->x;
 	dt.dy = crd->yf - crd->y;
 	dt.max = fmax(fabs(dt.dx), fabs(dt.dy));
@@ -50,6 +50,7 @@ void	drawmap(t_mlxdata *app)
 
 	if (!app)
 		return ;
+	setxys(app, &crd);
 	y = 0;
 	while (y < (int)app->map->size_y)
 	{
@@ -90,23 +91,22 @@ int	findmax(t_map *map)
 	return (max);
 }
 
-t_scale	*crtscale(t_map *map, float k, int dx)
+t_scale	*crtscale(t_map *map, float zscale, int dx)
 {
-	int		max;
 	t_scale	*scale;
 
 	if (dx < 0)
-		dx = 3;
+		dx = 2;
+	if (zscale < 0)
+		zscale = 1.0;
 	scale = malloc(sizeof(t_scale));
 	if (!map || !scale)
 		return (NULL);
-	scale->xscale = 1 * ((float)SIZE_X / dx) / (float)(map->size_x);
-	scale->yscale = 1 * (((float)SIZE_Y / dx) / (float)(map->size_y));
-	max = findmax(map);
-	if (max * k < SIZE_Y / dx)
-		scale->k = k;
-	else
-		scale->k = 0.8 * ((float)SIZE_Y / (dx * (max + 1)));
+	scale->scale = (float)dx;
+	scale->xscale = (float)SIZE_X / dx / (float)map->size_x;
+	scale->yscale = (float)SIZE_Y / dx / (float)map->size_y;
+	scale->zscale = zscale;
+	printf("scale: %f\tzscale: %f\n", scale->scale, scale->zscale);
 	return (scale);
 }
 

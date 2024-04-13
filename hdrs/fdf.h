@@ -6,7 +6,7 @@
 /*   By: blackrider <blackrider@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/01 20:56:21 by blackrider        #+#    #+#             */
-/*   Updated: 2024/04/12 22:53:03 by blackrider       ###   ########.fr       */
+/*   Updated: 2024/04/13 12:40:09 by blackrider       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,9 +32,10 @@ typedef struct s_dt
 
 typedef struct s_scale
 {
-	float	k;
+	float	scale;
 	float	xscale;
 	float	yscale;
+	float	zscale;
 }			t_scale;
 
 typedef struct s_crd
@@ -43,6 +44,8 @@ typedef struct s_crd
 	float	y;
 	float	xf;
 	float	yf;
+	float	xs;
+	float	ys;
 }			t_crd;
 
 typedef struct s_mapd
@@ -89,7 +92,7 @@ int			rgbcolor(t_uchr red, t_uchr blue, t_uchr green);
 void		setpixel(t_mlxdata *app, int x, int y, int color);
 void		isometric(t_mlxdata *app, float *x, float *y, int z);
 long		setcolor(t_mlxdata *app, t_crd *crd);
-void		setvenue(t_mlxdata *app, t_crd *crd);
+void		setvenue(t_crd *crd);
 ////////////////////////////////TOOLS//////////////////////////////
 void		*free_map(t_map	*crd);
 long		tda_size(char ***map);
@@ -100,4 +103,5 @@ t_mapd		*create_mapd(long z, long color);
 t_crd		*crt_crd(int x, int y, int xf, int yf);
 void		scale_crd(t_crd *crd, t_scale *sc);
 t_crd		*setcrd_xy(t_crd *crd, int x, int y, t_uchr i);
+t_crd		*setxys(t_mlxdata *app, t_crd *crd);
 // char	*maptostr(char *filename);

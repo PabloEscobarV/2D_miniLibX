@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   t_crd_tools.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: polenyc <polenyc@student.42.fr>            +#+  +:+       +#+        */
+/*   By: blackrider <blackrider@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 10:31:40 by blackrider        #+#    #+#             */
-/*   Updated: 2024/04/12 12:05:21 by polenyc          ###   ########.fr       */
+/*   Updated: 2024/04/13 13:38:12 by blackrider       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,13 @@ void	scale_crd(t_crd *crd, t_scale *sc)
 	crd->y *= sc->yscale;
 	crd->xf *= sc->xscale;
 	crd->yf *= sc->yscale;
+}
+
+t_crd	*setxys(t_mlxdata *app, t_crd *crd)
+{
+	crd->xs = (SIZE_X - app->map->size_x * app->sc->xscale) / (1.3);
+	crd->ys = (SIZE_Y - app->map->size_y * app->sc->yscale) / (2.3);
+	return (crd);
 }
 
 t_crd	*setcrd_xy(t_crd *crd, int x, int y, t_uchr i)
