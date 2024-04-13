@@ -6,10 +6,11 @@
 /*   By: blackrider <blackrider@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/01 20:56:21 by blackrider        #+#    #+#             */
-/*   Updated: 2024/04/13 12:40:09 by blackrider       ###   ########.fr       */
+/*   Updated: 2024/04/13 15:20:33 by blackrider       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#pragma once
 #include "../libft/libft.h"
 #include "../get_next_line/get_next_line_bonus.h"
 #include <stdlib.h>
@@ -17,7 +18,7 @@
 #include <unistd.h>
 
 #define HEX_FDF 	"0123456789ABCDEF"
-#define SIZE_X 		1900
+#define SIZE_X 		1000
 #define SIZE_Y 		1000
 #define TITLE		"FdF"
 
@@ -42,8 +43,10 @@ typedef struct s_crd
 {
 	float	x;
 	float	y;
-	float	xf;
-	float	yf;
+	float	z;
+	float	x_;
+	float	y_;
+	float	z_;
 	float	xs;
 	float	ys;
 }			t_crd;
@@ -76,8 +79,9 @@ typedef struct s_mlxdata
 {
 	void		*app;
 	void		*wnd;
-	t_mlximg	*img;
+	t_crd		*crd;
 	t_map		*map;
+	t_mlximg	*img;
 	t_scale		*sc;
 }				t_mlxdata;
 
@@ -90,7 +94,7 @@ int			exitapp(void *app);
 ////////////////////////////////MLX_TOOLS//////////////////////////////
 int			rgbcolor(t_uchr red, t_uchr blue, t_uchr green);
 void		setpixel(t_mlxdata *app, int x, int y, int color);
-void		isometric(t_mlxdata *app, float *x, float *y, int z);
+void		isometric(t_mlxdata *app, float *x, float *y, float z);
 long		setcolor(t_mlxdata *app, t_crd *crd);
 void		setvenue(t_crd *crd);
 ////////////////////////////////TOOLS//////////////////////////////
@@ -100,8 +104,12 @@ int			sizematrix(char **mapstr);
 ////////////////////////////////T_MAPD//////////////////////////////
 t_mapd		*create_mapd(long z, long color);
 // ////////////////////////////////T_CRD//////////////////////////////
-t_crd		*crt_crd(int x, int y, int xf, int yf);
+t_crd		*crt_crd(float x, float y, float z);
 void		scale_crd(t_crd *crd, t_scale *sc);
 t_crd		*setcrd_xy(t_crd *crd, int x, int y, t_uchr i);
 t_crd		*setxys(t_mlxdata *app, t_crd *crd);
-// char	*maptostr(char *filename);
+// ////////////////////////////////ROTATION//////////////////////////////
+void		rotate_x(t_crd  *crd, float alfa);
+void		rotate_y(t_crd  *crd, float alfa);
+void		rotate_z(t_crd  *crd, float alfa);
+// char	*maptostr(char *filename)

@@ -6,35 +6,34 @@
 /*   By: blackrider <blackrider@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/10 20:09:11 by blackrider        #+#    #+#             */
-/*   Updated: 2024/04/13 13:37:26 by blackrider       ###   ########.fr       */
+/*   Updated: 2024/04/13 15:47:06 by blackrider       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../hdrs/fdf.h"
 #include "../minilibx-linux/mlx.h"
+#include <X11/keysym.h>
 #include <stdio.h>
 #include <math.h>
 
 void	brensenhem(t_mlxdata *app, t_crd *crd)
 {
 	long			color;
-	int				z;
-	int				z1;
 	t_dt			dt;
 
-	z = app->map->crd[(int)(crd->y)][(int)(crd->x)].z;
-	z1 = app->map->crd[(int)(crd->yf)][(int)(crd->xf)].z;
+	crd->z = app->map->crd[(int)(crd->y)][(int)(crd->x)].z;
+	crd->z_ = app->map->crd[(int)(crd->y_)][(int)(crd->x_)].z;
 	color = setcolor(app, crd);
 	scale_crd(crd, app->sc);
-	isometric(app, &crd->x, &crd->y, z);
-	isometric(app, &crd->xf, &crd->yf, z1);
+	isometric(app, &crd->x, &crd->y, crd->z);
+	isometric(app, &crd->x_, &crd->y_, crd->z_);
 	setvenue(crd);
-	dt.dx = crd->xf - crd->x;
-	dt.dy = crd->yf - crd->y;
+	dt.dx = crd->x_ - crd->x;
+	dt.dy = crd->y_ - crd->y;
 	dt.max = fmax(fabs(dt.dx), fabs(dt.dy));
 	dt.dx /= dt.max;
 	dt.dy /= dt.max;
-	while ((int)(crd->xf - crd->x) || (int)(crd->yf - crd->y))
+	while ((int)(crd->x_ - crd->x) || (int)(crd->y_ - crd->y))
 	{
 		setpixel(app, crd->x, crd->y, color);
 		crd->x += dt.dx;
@@ -46,11 +45,9 @@ void	drawmap(t_mlxdata *app)
 {
 	int		x;
 	int		y;
-	t_crd	crd;
 
 	if (!app)
 		return ;
-	setxys(app, &crd);
 	y = 0;
 	while (y < (int)app->map->size_y)
 	{
@@ -58,9 +55,9 @@ void	drawmap(t_mlxdata *app)
 		while (x < (int)app->map->size_x)
 		{
 			if (x < (int)app->map->size_x - 1)
-				brensenhem(app, setcrd_xy(&crd, x, y, 0));
+				brensenhem(app, setcrd_xy(app->crd, x, y, 0));
 			if (y < (int)app->map->size_y - 1)
-				brensenhem(app, setcrd_xy(&crd, x, y, 1));
+				brensenhem(app, setcrd_xy(app->crd, x, y, 1));
 			++x;
 		}
 		++y;
@@ -110,8 +107,53 @@ t_scale	*crtscale(t_map *map, float zscale, int dx)
 	return (scale);
 }
 
+void	clear_img(t_mlximg *img)
+{
+	int	i;
+	int	j;
+	int	offset;
+
+	i = 0;
+	while (i < SIZE_X)
+	{
+		j = 0;
+		while (j < SIZE_Y)
+		{
+			offset = img->size_line * j + i * img->bits_per_pixel / 8;
+			*(unsigned int *)(offset + img->img_pixels) = 0;
+			++j;
+		}
+		++i;
+	}
+}
+
+void	redraw(t_mlxdata *app, int key, int i)
+{
+	if (key == XK_Up)
+		app->crd->ys -= i;
+	if (key == XK_Down)
+		app->crd->ys += i;
+	if (key == XK_Left)
+		app->crd->xs -= i;
+	if (key == XK_Right)
+		app->crd->xs += i;
+	clear_img(app->img);
+	drawmap(app);
+}
+
+int		relocate_app(int key, t_mlxdata *app)
+{
+	if (key == XK_Escape)
+		exitapp(app);
+	if (key != XK_Up && key != XK_Down && key != XK_Left && key != XK_Right)
+		return (0);
+	redraw(app, key, 10);
+	return (0);
+}
+
 int	main(int argc, char **argv)
 {
+	long		key;
 	int			scale;
 	int			dx;
 	t_map		*map;
@@ -130,6 +172,12 @@ int	main(int argc, char **argv)
 		exit(-1);
 	app = crt_mlxdata(map, crtscale(map, scale, dx));
 	drawmap(app);
+	int i = 200;
+	while (i--)
+	{
+		redraw(app, XK_Right, 2);
+	}
+	mlx_hook(app->wnd, 2, 1L, relocate_app, app);
 	mlx_hook(app->wnd, 17, 1L << 3, exitapp, app);
 	mlx_loop(app->app);
 	return (0);

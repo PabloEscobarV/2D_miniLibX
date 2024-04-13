@@ -13,6 +13,7 @@
                 "mapform.c",
                 "mlx_tools.c",
                 "t_crd_tools.c",
+                "rotate.c",
                 "-L../get_next_line",
                 "-lgnlfull",
                 "-L../libft",

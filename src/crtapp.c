@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   crtapp.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: polenyc <polenyc@student.42.fr>            +#+  +:+       +#+        */
+/*   By: blackrider <blackrider@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 10:34:25 by blackrider        #+#    #+#             */
-/*   Updated: 2024/04/12 13:08:25 by polenyc          ###   ########.fr       */
+/*   Updated: 2024/04/13 15:10:29 by blackrider       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ void	*ft_free_mlxdata(t_mlxdata	*data)
 	free(data->img);
 	free(data->app);
 	free(data->sc);
+	free(data->crd);
 	free(data);
 	return (NULL);
 }
@@ -38,9 +39,12 @@ t_mlxdata	*newmlxdata(void)
 		return (NULL);
 	data->app = NULL;
 	data->wnd = NULL;
-	data->img = NULL;
+	data->img = malloc(sizeof(t_mlximg));
 	data->map = NULL;
 	data->sc = NULL;
+	data->crd = crt_crd(0, 0, 0);
+	if (!data->img || !data->crd)
+		return (ft_free_mlxdata(data));
 	return (data);
 }
 
@@ -58,8 +62,7 @@ t_mlxdata	*crt_mlxdata(t_map *map, t_scale *sc)
 	if (!(data->map))
 		return (ft_free_mlxdata(data));
 	data->wnd = mlx_new_window(data->app, SIZE_X, SIZE_Y, TITLE);
-	data->img = malloc(sizeof(t_mlximg));
-	if (!(data->wnd) || !(data->img))
+	if (!(data->wnd))
 		return (ft_free_mlxdata(data));
 	data->img->img_ptr = mlx_new_image(data->app, SIZE_X, SIZE_Y);
 	data->img->img_pixels = mlx_get_data_addr(data->img->img_ptr,
@@ -68,6 +71,7 @@ t_mlxdata	*crt_mlxdata(t_map *map, t_scale *sc)
 	if (!(data->img->img_ptr) || !(data->img->img_pixels))
 		return (ft_free_mlxdata(data));
 	data->sc = sc;
+	setxys(data, data->crd);
 	return (data);
 }
 

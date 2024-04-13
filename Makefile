@@ -13,7 +13,7 @@ LIBFT = ft
 MLX = mlx_Linux
 
 CC = gcc
-CFLAG = -Wall -Wextra -Werror
+CFLAG = -Wall -Wextra
 CLIBFLAFGS = -L$(GNLDIR) -l$(GNL) -L$(LIBFTDIR) -l$(LIBFT) -L$(MLXDIR) -l$(MLX) -lX11 -lXext -lm
 
 .PHONY: all, bonus, clean, fclean, clean_re, re

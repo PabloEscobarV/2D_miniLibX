@@ -6,7 +6,7 @@
 /*   By: blackrider <blackrider@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 10:38:10 by blackrider        #+#    #+#             */
-/*   Updated: 2024/04/13 13:28:36 by blackrider       ###   ########.fr       */
+/*   Updated: 2024/04/13 14:40:19 by blackrider       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	setpixel(t_mlxdata *app, int x, int y, int color)
 	*(unsigned int *)(offset + app->img->img_pixels) = color;
 }
 
-void	isometric(t_mlxdata *app, float *x, float *y, int z)
+void	isometric(t_mlxdata *app, float *x, float *y, float z)
 {
 	*x = (*x - *y) * cos(0.8);
 	*y = (*x + *y) * sin(0.8) - z * app->sc->zscale;
@@ -43,7 +43,7 @@ long	setcolor(t_mlxdata *app, t_crd *crd)
 	if (color)
 		return (color);
 	if ((app->map->crd[(int)crd->y][(int)crd->x].z
-		|| app->map->crd[(int)crd->yf][(int)crd->xf].z))
+		|| app->map->crd[(int)crd->y_][(int)crd->x_].z))
 		color = rgbcolor(50, 255, 50);
 	else
 		color = rgbcolor(255, 255, 255);
@@ -53,7 +53,7 @@ long	setcolor(t_mlxdata *app, t_crd *crd)
 void	setvenue(t_crd *crd)
 {
 	crd->x += crd->xs;
-	crd->xf += crd->xs;
+	crd->x_ += crd->xs;
 	crd->y += crd->ys;
-	crd->yf += crd->ys;
+	crd->y_ += crd->ys;
 }
