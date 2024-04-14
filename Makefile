@@ -21,6 +21,9 @@ CLIBFLAFGS = -L$(GNLDIR) -l$(GNL) -L$(LIBFTDIR) -l$(LIBFT) -L$(MLXDIR) -l$(MLX) 
 all: $(NAME)
 
 $(NAME): $(OBJ) $(GNL) $(LIBFT) $(MLX)
+	$(MAKE) -C $(GNLDIR) bonus
+	$(MAKE) -C $(LIBFTDIR)
+	$(MAKE) -C $(MLXDIR)
 	$(CC) $(CFLAG) $(OBJ) $(CLIBFLAFGS) -o $@
 
 $(OBJDIR)/%.o: $(SRCDIR)/%.c

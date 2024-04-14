@@ -6,7 +6,7 @@
 /*   By: blackrider <blackrider@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 13:21:21 by polenyc           #+#    #+#             */
-/*   Updated: 2024/04/14 20:21:15 by blackrider       ###   ########.fr       */
+/*   Updated: 2024/04/14 22:56:38 by blackrider       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,22 @@
 #include <unistd.h>
 #include <fcntl.h>
 #include <stdio.h>
+
+long	filesize(const char *filename)
+{
+	long	size;
+	char	tmp;
+	int		file;
+
+	file = open(filename, O_RDONLY);
+	if (file < 3)
+		return (-1);
+	size = 0;
+	while (read(file, &tmp, sizeof(char)))
+		++size;
+	close(file);
+	return (size);
+}
 
 char	*maptostr(const char *filename)
 {
@@ -79,29 +95,6 @@ char	***crtcharmap(const char *filename)
 	return (map);
 }
 
-t_mapd	*crtmapd(char **mapchar, t_map *map)
-{
-	int		i;
-	char	**tmp;
-	t_mapd	*data;
-
-	if ((int)map->size_x != sizematrix(mapchar))
-		return (NULL);
-	data = malloc(map->size_x * sizeof(t_mapd));
-	if (!data)
-		return (NULL);
-	i = 0;
-	while (mapchar[i])
-	{
-		tmp = ft_split(mapchar[i], ',');
-		(data + i)->z = ft_atoi(*tmp);
-		(data + i)->color = ft_atoi_base(*(tmp + 1), HEX_BASE_L);
-		ft_free_d((void **)tmp);
-		++i;
-	}
-	return (data);
-}
-
 t_map	*createmap(const char *filename)
 {
 	int		i;
@@ -112,8 +105,6 @@ t_map	*createmap(const char *filename)
 	if (!charmap)
 		return (NULL);
 	map = malloc(sizeof(t_map));
-	if (!map)
-		return (NULL);
 	map->size_x = sizematrix(*charmap);
 	map->size_y = tda_size(charmap);
 	map->crd = malloc((map->size_y + 1) * sizeof(t_mapd *));
@@ -132,20 +123,3 @@ t_map	*createmap(const char *filename)
 	ft_free_t((void ***)charmap);
 	return (map);
 }
-
-// int	main(void)
-// {
-// 	t_map	*crd;
-
-// 	crd = createmap("../maps/test_maps/50-4.fdf");
-// 	for (int i = 0; i < crd->size_y; ++i)
-// 	{
-// 		for (int j = 0; j < crd->size_x; ++j)
-// 		{
-// 			printf("%d,%d\t", crd->crd[i][j].z, crd->crd[i][j].color);
-// 		}
-// 		printf("\n");
-// 	}
-// 	free_map(crd);
-// 	return (0);
-// }

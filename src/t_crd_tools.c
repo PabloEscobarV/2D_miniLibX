@@ -6,7 +6,7 @@
 /*   By: blackrider <blackrider@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 10:31:40 by blackrider        #+#    #+#             */
-/*   Updated: 2024/04/13 14:44:33 by blackrider       ###   ########.fr       */
+/*   Updated: 2024/04/14 22:56:54 by blackrider       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,4 +60,27 @@ t_crd	*setcrd_xy(t_crd *crd, int x, int y, t_uchr i)
 	crd->x_ = (float)x + 1;
 	crd->y_ = (float)y;
 	return (crd);
+}
+
+t_mapd	*crtmapd(char **mapchar, t_map *map)
+{
+	int		i;
+	char	**tmp;
+	t_mapd	*data;
+
+	if ((int)map->size_x != sizematrix(mapchar))
+		return (NULL);
+	data = malloc(map->size_x * sizeof(t_mapd));
+	if (!data)
+		return (NULL);
+	i = 0;
+	while (mapchar[i])
+	{
+		tmp = ft_split(mapchar[i], ',');
+		(data + i)->z = ft_atoi(*tmp);
+		(data + i)->color = ft_atoi_base(*(tmp + 1), HEX_BASE_L);
+		ft_free_d((void **)tmp);
+		++i;
+	}
+	return (data);
 }

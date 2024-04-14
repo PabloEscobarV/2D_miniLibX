@@ -6,7 +6,7 @@
 /*   By: blackrider <blackrider@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/01 20:56:21 by blackrider        #+#    #+#             */
-/*   Updated: 2024/04/14 18:54:48 by blackrider       ###   ########.fr       */
+/*   Updated: 2024/04/14 22:57:22 by blackrider       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,14 @@
 #include <fcntl.h>
 #include <unistd.h>
 
-#define HEX_FDF 	"0123456789ABCDEF"
-#define SIZE_X 		1900
-#define SIZE_Y 		1100
-#define TITLE		"FdF"
+#define HEX_FDF 			"0123456789ABCDEF"
+#define SIZE_X 				1900
+#define SIZE_Y 				1100
+#define MOUSE_SCROLL_UP 	4
+#define MOUSE_SCROLL_DOWN 	5
+#define ZOOM_IN				65453
+#define ZOOM_OUT			65451
+#define TITLE				"FdF"
 
 typedef unsigned char	t_uchr;
 
@@ -85,6 +89,7 @@ typedef struct s_mlxdata
 	t_scale		*sc;
 }				t_mlxdata;
 
+void		drawmap(t_mlxdata *app);
 t_map		*createmap(const char *filename);
 ////////////////////////////////CRT_APP//////////////////////////////
 t_mlxdata	*newmlxdata(void);
@@ -110,7 +115,13 @@ t_crd		*setcrd_xy(t_crd *crd, int x, int y, t_uchr i);
 t_crd		*setxys(t_mlxdata *app, t_crd *crd);
 // ////////////////////////////////ROTATION//////////////////////////////
 void		rotate(t_crd *crd, int key, float alfa);
-void		rotate_x(t_crd  *crd, float alfa);
-void		rotate_y(t_crd  *crd, float alfa);
-void		rotate_z(t_crd  *crd, float alfa);
+void		rotate_x(t_crd *crd, float alfa);
+void		rotate_y(t_crd *crd, float alfa);
+void		rotate_z(t_crd *crd, float alfa);
+
+t_scale		*crtscale(t_map *map, float zscale, int dx);
+void		clear_img(t_mlxdata *app);
+int			changevenue(t_mlxdata *app, int key, int i);
+int			handleevent(int key, t_mlxdata *app);
+int			andle_mouse_scroll(int key, int x, int y, void *app);
 // char	*maptostr(char *filename)
