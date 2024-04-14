@@ -6,7 +6,7 @@
 /*   By: blackrider <blackrider@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/01 20:56:21 by blackrider        #+#    #+#             */
-/*   Updated: 2024/04/14 22:57:22 by blackrider       ###   ########.fr       */
+/*   Updated: 2024/04/14 22:58:21 by blackrider       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,5 +123,5 @@ t_scale		*crtscale(t_map *map, float zscale, int dx);
 void		clear_img(t_mlxdata *app);
 int			changevenue(t_mlxdata *app, int key, int i);
 int			handleevent(int key, t_mlxdata *app);
-int			andle_mouse_scroll(int key, int x, int y, void *app);
+int			handle_mouse_scroll(int key, int x, int y, void *app);
 // char	*maptostr(char *filename)
