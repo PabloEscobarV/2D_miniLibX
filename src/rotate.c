@@ -6,12 +6,13 @@
 /*   By: blackrider <blackrider@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/13 14:05:00 by blackrider        #+#    #+#             */
-/*   Updated: 2024/04/13 14:40:48 by blackrider       ###   ########.fr       */
+/*   Updated: 2024/04/14 19:08:13 by blackrider       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../hdrs/fdf.h"
 #include <math.h>
+#include <X11/keysym.h>
 
 void	rotate_x(t_crd  *crd, float alfa)
 {
@@ -47,4 +48,31 @@ void	rotate_z(t_crd  *crd, float alfa)
 	tmp = crd->x_;
 	crd->x_ = crd->x_ * cos(alfa) - crd->y_ * sin(alfa);
 	crd->y_ = tmp * sin(alfa) + crd->y_ * cos(alfa);
+}
+
+void	rotate(t_crd *crd, int key, float alfa)
+{
+	if (!key || !alfa)
+		return ;
+	if (key == XK_w)
+	{
+		rotate_x(crd, alfa);
+		return ;
+	}
+	if (key == XK_s)
+	{
+		rotate_x(crd, -alfa);
+		return ;
+	}
+	if (key == XK_a)
+	{
+		rotate_y(crd, -alfa);
+		return ;
+	}
+	if (key == XK_d)
+	{
+		rotate_y(crd, alfa);
+		return ;
+	}
+	return ;
 }

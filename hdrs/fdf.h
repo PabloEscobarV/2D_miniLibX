@@ -6,7 +6,7 @@
 /*   By: blackrider <blackrider@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/01 20:56:21 by blackrider        #+#    #+#             */
-/*   Updated: 2024/04/13 15:20:33 by blackrider       ###   ########.fr       */
+/*   Updated: 2024/04/14 18:54:48 by blackrider       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,8 @@
 #include <unistd.h>
 
 #define HEX_FDF 	"0123456789ABCDEF"
-#define SIZE_X 		1000
-#define SIZE_Y 		1000
+#define SIZE_X 		1900
+#define SIZE_Y 		1100
 #define TITLE		"FdF"
 
 typedef unsigned char	t_uchr;
@@ -109,6 +109,7 @@ void		scale_crd(t_crd *crd, t_scale *sc);
 t_crd		*setcrd_xy(t_crd *crd, int x, int y, t_uchr i);
 t_crd		*setxys(t_mlxdata *app, t_crd *crd);
 // ////////////////////////////////ROTATION//////////////////////////////
+void		rotate(t_crd *crd, int key, float alfa);
 void		rotate_x(t_crd  *crd, float alfa);
 void		rotate_y(t_crd  *crd, float alfa);
 void		rotate_z(t_crd  *crd, float alfa);
