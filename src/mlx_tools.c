@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mlx_tools.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: polenyc <polenyc@student.42.fr>            +#+  +:+       +#+        */
+/*   By: blackrider <blackrider@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 10:38:10 by blackrider        #+#    #+#             */
-/*   Updated: 2024/04/15 14:30:05 by polenyc          ###   ########.fr       */
+/*   Updated: 2024/04/15 19:57:02 by blackrider       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,8 @@ void	setpixel(t_mlxdata *app, int x, int y, int color)
 
 void	isometric(t_mlxdata *app, float *x, float *y, float z)
 {
-	*x = (*x - *y) * cos(0.8);
-	*y = (*x + *y) * sin(0.8) - z * app->sc->zscale;
+	*x = (*x - *y) * cos(0.82);
+	*y = (*x + *y) * sin(0.82) - z * app->sc->zscale;
 }
 
 long	setcolor(t_mlxdata *app, t_crd *crd)

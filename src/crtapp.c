@@ -6,7 +6,7 @@
 /*   By: blackrider <blackrider@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 10:34:25 by blackrider        #+#    #+#             */
-/*   Updated: 2024/04/15 16:05:02 by blackrider       ###   ########.fr       */
+/*   Updated: 2024/04/15 19:45:15 by blackrider       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,7 @@ t_mlxdata	*newmlxdata(void)
 
 void		setzscale(t_mlxdata *app)
 {
-	app->sc->zscale = app->sc->xscale * app->sc->xscale / app->sc->yscale
-		* app->sc->zscale;
+	app->sc->zscale = app->sc->xscale * app->sc->xscale / app->sc->yscale;
 	if (fabs(app->sc->zscale * app->map->max) < SIZE_Y / app->sc->scale / 3)
 		return ;
 	app->sc->zscale = SIZE_Y / (fabs(app->map->max)  * app->sc->scale * 3);

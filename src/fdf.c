@@ -6,7 +6,7 @@
 /*   By: blackrider <blackrider@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/10 20:09:11 by blackrider        #+#    #+#             */
-/*   Updated: 2024/04/15 16:03:24 by blackrider       ###   ########.fr       */
+/*   Updated: 2024/04/15 19:53:47 by blackrider       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,13 +95,13 @@ int	main(int argc, char **argv)
 
 	dx = 2;
 	scale = 1;
-	// if (argc < 2)
-	// 	exit(-1);
+	if (argc < 2)
+		exit(-1);
 	if (argc > 3 && ft_atoi(argv[3]))
 		dx = ft_atoi(argv[3]);
 	if (argc > 2 && ft_atoi(argv[2]))
 		scale = ft_atoi(argv[2]);
-	map = createmap("../maps/mars.fdf");
+	map = createmap(argv[1]);
 	if (!map)
 		exit(-1);
 	app = crt_mlxdata(map, crtscale(map, scale, dx));
