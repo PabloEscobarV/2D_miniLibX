@@ -3,83 +3,70 @@
 /*                                                        :::      ::::::::   */
 /*   crtapp.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: blackrider <blackrider@student.42.fr>      +#+  +:+       +#+        */
+/*   By: polenyc <polenyc@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 10:34:25 by blackrider        #+#    #+#             */
-/*   Updated: 2024/04/13 15:10:29 by blackrider       ###   ########.fr       */
+/*   Updated: 2024/04/15 14:50:15 by polenyc          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../hdrs/fdf.h"
 #include "../minilibx-linux/mlx.h"
-
-void	*ft_free_mlxdata(t_mlxdata	*data)
-{
-	if (data->img)
-		mlx_destroy_image(data->app, data->img->img_ptr);
-	if (data->wnd)
-		mlx_destroy_window(data->app, data->wnd);
-	if (data->app)
-		mlx_destroy_display(data->app);
-	free_map(data->map);
-	free(data->img);
-	free(data->app);
-	free(data->sc);
-	free(data->crd);
-	free(data);
-	return (NULL);
-}
+#include <math.h>
 
 t_mlxdata	*newmlxdata(void)
 {
-	t_mlxdata	*data;
+	t_mlxdata	*app;
 
-	data = malloc(sizeof(t_mlxdata));
-	if (!data)
+	app = malloc(sizeof(t_mlxdata));
+	if (!app)
 		return (NULL);
-	data->app = NULL;
-	data->wnd = NULL;
-	data->img = malloc(sizeof(t_mlximg));
-	data->map = NULL;
-	data->sc = NULL;
-	data->crd = crt_crd(0, 0, 0);
-	if (!data->img || !data->crd)
-		return (ft_free_mlxdata(data));
-	return (data);
+	app->app = NULL;
+	app->wnd = NULL;
+	app->img = malloc(sizeof(t_mlximg));
+	app->map = NULL;
+	app->sc = NULL;
+	app->crd = crt_crd(0, 0, 0);
+	if (!app->img || !app->crd)
+		return (ft_free_mlxdata(app));
+	return (app);
+}
+
+void		setzscale(t_mlxdata *app)
+{
+	app->sc->zscale = app->sc->xscale * app->sc->xscale / app->sc->yscale
+		/ app->sc->zscale;
+	if (fabs(app->sc->zscale * app->map->max) < SIZE_Y / app->sc->scale)
+		return ;
+	app->sc->zscale = app->sc->zscale * app->map->max / (SIZE_Y / app->sc->scale);
 }
 
 t_mlxdata	*crt_mlxdata(t_map *map, t_scale *sc)
 {
-	t_mlxdata	*data;
+	t_mlxdata	*app;
 
-	data = newmlxdata();
-	if (!data || !map || !sc)
+	app = newmlxdata();
+	if (!app || !map || !sc)
 		return (NULL);
-	data->app = mlx_init();
-	if (!(data->app))
+	app->app = mlx_init();
+	if (!(app->app))
 		return (NULL);
-	data->map = map;
-	if (!(data->map))
-		return (ft_free_mlxdata(data));
-	data->wnd = mlx_new_window(data->app, SIZE_X, SIZE_Y, TITLE);
-	if (!(data->wnd))
-		return (ft_free_mlxdata(data));
-	data->img->img_ptr = mlx_new_image(data->app, SIZE_X, SIZE_Y);
-	data->img->img_pixels = mlx_get_data_addr(data->img->img_ptr,
-			&data->img->bits_per_pixel, &data->img->size_line,
-			&data->img->endian);
-	if (!(data->img->img_ptr) || !(data->img->img_pixels))
-		return (ft_free_mlxdata(data));
-	data->sc = sc;
-	setxys(data, data->crd);
-	return (data);
-}
-
-int	exitapp(void *app)
-{
-	ft_free_mlxdata((t_mlxdata *)app);
-	exit(0);
-	return (0);
+	app->map = map;
+	if (!(app->map))
+		return (ft_free_mlxdata(app));
+	app->wnd = mlx_new_window(app->app, SIZE_X, SIZE_Y, TITLE);
+	if (!(app->wnd))
+		return (ft_free_mlxdata(app));
+	app->img->img_ptr = mlx_new_image(app->app, SIZE_X, SIZE_Y);
+	app->img->img_pixels = mlx_get_data_addr(app->img->img_ptr,
+			&app->img->bits_per_pixel, &app->img->size_line,
+			&app->img->endian);
+	if (!(app->img->img_ptr) || !(app->img->img_pixels))
+		return (ft_free_mlxdata(app));
+	app->sc = sc;
+	setxys(app, app->crd);
+	setzscale(app);
+	return (app);
 }
 
 t_mapd	*create_mapd(long z, long color)

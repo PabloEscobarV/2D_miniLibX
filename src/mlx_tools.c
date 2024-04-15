@@ -6,7 +6,7 @@
 /*   By: polenyc <polenyc@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 10:38:10 by blackrider        #+#    #+#             */
-/*   Updated: 2024/04/15 13:10:43 by polenyc          ###   ########.fr       */
+/*   Updated: 2024/04/15 14:30:05 by polenyc          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,7 @@ void	setpixel(t_mlxdata *app, int x, int y, int color)
 void	isometric(t_mlxdata *app, float *x, float *y, float z)
 {
 	*x = (*x - *y) * cos(0.8);
-	*y = (*x + *y) * sin(0.8) - z * app->sc->xscale * app->sc->xscale
-		/ app->sc->yscale / app->sc->scale;
+	*y = (*x + *y) * sin(0.8) - z * app->sc->zscale;
 }
 
 long	setcolor(t_mlxdata *app, t_crd *crd)

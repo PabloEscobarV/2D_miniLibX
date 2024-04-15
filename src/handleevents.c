@@ -6,7 +6,7 @@
 /*   By: polenyc <polenyc@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/14 20:53:23 by blackrider        #+#    #+#             */
-/*   Updated: 2024/04/15 13:08:12 by polenyc          ###   ########.fr       */
+/*   Updated: 2024/04/15 13:59:22 by polenyc          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,3 @@ int	handleevent(int key, t_mlxdata *app)
 		return (0);
 	return (0);
 }
-
-	// if (key != MOUSE_SCROLL_UP && key != MOUSE_SCROLL_DOWN)
-	// 	return (0);

@@ -6,7 +6,7 @@
 /*   By: polenyc <polenyc@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/10 20:09:11 by blackrider        #+#    #+#             */
-/*   Updated: 2024/04/15 13:10:27 by polenyc          ###   ########.fr       */
+/*   Updated: 2024/04/15 14:48:45 by polenyc          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,8 +93,8 @@ int	main(int argc, char **argv)
 	t_map		*map;
 	t_mlxdata	*app;
 
-	dx = 3;
-	scale = 2;
+	dx = 2;
+	scale = 1;
 	if (argc < 2)
 		exit(-1);
 	if (argc > 3 && ft_atoi(argv[3]))
