@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fdf.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: polenyc <polenyc@student.42.fr>            +#+  +:+       +#+        */
+/*   By: blackrider <blackrider@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/01 20:56:21 by blackrider        #+#    #+#             */
-/*   Updated: 2024/04/15 14:07:35 by polenyc          ###   ########.fr       */
+/*   Updated: 2024/04/15 16:00:08 by blackrider       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,6 +121,7 @@ void		rotate_x(t_crd *crd, float alfa);
 void		rotate_y(t_crd *crd, float alfa);
 void		rotate_z(t_crd *crd, float alfa);
 
+void		setzscale(t_mlxdata *app);
 t_scale		*crtscale(t_map *map, float zscale, int dx);
 void		clear_img(t_mlxdata *app);
 int			changevenue(t_mlxdata *app, int key, int i);

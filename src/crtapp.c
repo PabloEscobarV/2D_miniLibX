@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   crtapp.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: polenyc <polenyc@student.42.fr>            +#+  +:+       +#+        */
+/*   By: blackrider <blackrider@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 10:34:25 by blackrider        #+#    #+#             */
-/*   Updated: 2024/04/15 14:50:15 by polenyc          ###   ########.fr       */
+/*   Updated: 2024/04/15 16:05:02 by blackrider       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,10 +35,10 @@ t_mlxdata	*newmlxdata(void)
 void		setzscale(t_mlxdata *app)
 {
 	app->sc->zscale = app->sc->xscale * app->sc->xscale / app->sc->yscale
-		/ app->sc->zscale;
-	if (fabs(app->sc->zscale * app->map->max) < SIZE_Y / app->sc->scale)
+		* app->sc->zscale;
+	if (fabs(app->sc->zscale * app->map->max) < SIZE_Y / app->sc->scale / 3)
 		return ;
-	app->sc->zscale = app->sc->zscale * app->map->max / (SIZE_Y / app->sc->scale);
+	app->sc->zscale = SIZE_Y / (fabs(app->map->max)  * app->sc->scale * 3);
 }
 
 t_mlxdata	*crt_mlxdata(t_map *map, t_scale *sc)

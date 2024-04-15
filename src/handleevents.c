@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handleevents.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: polenyc <polenyc@student.42.fr>            +#+  +:+       +#+        */
+/*   By: blackrider <blackrider@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/14 20:53:23 by blackrider        #+#    #+#             */
-/*   Updated: 2024/04/15 13:59:22 by polenyc          ###   ########.fr       */
+/*   Updated: 2024/04/15 16:00:16 by blackrider       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ int	scaling(t_mlxdata *app, int key, float scale)
 			app->sc->scale -= scale;
 	app->sc->xscale = (float)SIZE_X / app->sc->scale / (float)app->map->size_x;
 	app->sc->yscale = (float)SIZE_Y / app->sc->scale / (float)app->map->size_y;
+	setzscale(app);
 	clear_img(app);
 	drawmap(app);
 	return (1);
