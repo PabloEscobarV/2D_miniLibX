@@ -6,7 +6,7 @@
 /*   By: blackrider <blackrider@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/01 20:56:21 by blackrider        #+#    #+#             */
-/*   Updated: 2024/04/15 16:00:08 by blackrider       ###   ########.fr       */
+/*   Updated: 2024/04/15 21:21:40 by blackrider       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,9 @@ typedef struct s_scale
 
 typedef struct s_crd
 {
+	int		curpos;
+	long	grad;
+	long	color;
 	float	x;
 	float	y;
 	float	z;
@@ -57,7 +60,7 @@ typedef struct s_crd
 
 typedef struct s_mapd
 {
-	long	z;
+	int		z;
 	long	color;
 }			t_mapd;
 
@@ -101,7 +104,7 @@ int			exitapp(void *app);
 int			rgbcolor(t_uchr red, t_uchr blue, t_uchr green);
 void		setpixel(t_mlxdata *app, int x, int y, int color);
 void		isometric(t_mlxdata *app, float *x, float *y, float z);
-long		setcolor(t_mlxdata *app, t_crd *crd);
+long		setcolor(t_mlxdata *app, t_crd *crd, long color);
 void		setvenue(t_crd *crd);
 ////////////////////////////////TOOLS//////////////////////////////
 void		*free_map(t_map	*crd);

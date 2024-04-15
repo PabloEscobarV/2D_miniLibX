@@ -6,7 +6,7 @@
 /*   By: blackrider <blackrider@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/10 20:09:11 by blackrider        #+#    #+#             */
-/*   Updated: 2024/04/15 19:53:47 by blackrider       ###   ########.fr       */
+/*   Updated: 2024/04/15 21:31:17 by blackrider       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,15 +15,30 @@
 #include <stdio.h>
 #include <stdarg.h>
 #include <math.h>
+#include <unistd.h>
+
+long	gradient(t_mlxdata *app, t_crd *crd, long i)
+{
+	if (!crd->z && crd->z_ && crd->curpos == crd->y)
+	{
+		crd->grad += i;
+		++(crd->curpos);
+	}
+	if (crd->z && !crd->z_ && crd->curpos == crd->y)
+	{
+		crd->grad -= i;
+		++(crd->curpos);
+	}
+	return (crd->grad);
+}
 
 void	brensenhem(t_mlxdata *app, t_crd *crd)
 {
-	long			color;
 	t_dt			dt;
 
 	crd->z = app->map->crd[(int)(crd->y)][(int)(crd->x)].z;
 	crd->z_ = app->map->crd[(int)(crd->y_)][(int)(crd->x_)].z;
-	color = setcolor(app, crd);
+	gradient(app, app->crd, 1000);
 	scale_crd(crd, app->sc);
 	isometric(app, &crd->x, &crd->y, crd->z);
 	isometric(app, &crd->x_, &crd->y_, crd->z_);
@@ -37,10 +52,16 @@ void	brensenhem(t_mlxdata *app, t_crd *crd)
 		return ;
 	while ((int)(crd->x_ - crd->x) || (int)(crd->y_ - crd->y))
 	{
-		setpixel(app, crd->x, crd->y, color);
+		if (crd->z || crd->z_)
+			setpixel(app, crd->x, crd->y, crd->color + crd->grad);
+		else
+			setpixel(app, crd->x, crd->y, crd->color);
 		crd->x += dt.dx;
 		crd->y += dt.dy;
 	}
+	mlx_clear_window(app->app, app->wnd);
+	mlx_put_image_to_window(app->app, app->wnd, app->img->img_ptr, 0, 0);
+	usleep(100000);
 }
 
 void	printdata(t_mlxdata *app, int count, ...)
@@ -53,7 +74,7 @@ void	printdata(t_mlxdata *app, int count, ...)
 	while (i < count)
 	{
 		mlx_string_put(app->app, app->wnd, 10, 10 + 10 * i,
-			rgbcolor(255, 255, 255),
+			rgbcolor(255, 20, 100),
 			va_arg(arg, char *));
 		++i;
 	}
@@ -68,8 +89,11 @@ void	drawmap(t_mlxdata *app)
 	if (!app)
 		return ;
 	y = 0;
+	app->crd->color = rgbcolor(255, 255, 255);
+	app->crd->grad = rgbcolor(255, 0, 0);
 	while (y < (int)app->map->size_y)
 	{
+		app->crd->curpos = y;
 		x = 0;
 		while (x < (int)app->map->size_x)
 		{
@@ -95,13 +119,13 @@ int	main(int argc, char **argv)
 
 	dx = 2;
 	scale = 1;
-	if (argc < 2)
-		exit(-1);
+	// if (argc < 2)
+	// 	exit(-1);
 	if (argc > 3 && ft_atoi(argv[3]))
 		dx = ft_atoi(argv[3]);
 	if (argc > 2 && ft_atoi(argv[2]))
 		scale = ft_atoi(argv[2]);
-	map = createmap(argv[1]);
+	map = createmap("../maps/42.fdf");
 	if (!map)
 		exit(-1);
 	app = crt_mlxdata(map, crtscale(map, scale, dx));

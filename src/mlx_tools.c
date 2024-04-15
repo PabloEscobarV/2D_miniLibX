@@ -6,7 +6,7 @@
 /*   By: blackrider <blackrider@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 10:38:10 by blackrider        #+#    #+#             */
-/*   Updated: 2024/04/15 19:57:02 by blackrider       ###   ########.fr       */
+/*   Updated: 2024/04/15 20:38:59 by blackrider       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,16 +35,14 @@ void	isometric(t_mlxdata *app, float *x, float *y, float z)
 	*y = (*x + *y) * sin(0.82) - z * app->sc->zscale;
 }
 
-long	setcolor(t_mlxdata *app, t_crd *crd)
+long	setcolor(t_mlxdata *app, t_crd *crd, long color)
 {
-	long	color;
-
 	color = app->map->crd[(int)crd->y][(int)crd->x].color;
 	if (color)
 		return (color);
 	if ((app->map->crd[(int)crd->y][(int)crd->x].z
 		|| app->map->crd[(int)crd->y_][(int)crd->x_].z))
-		color = rgbcolor(50, 255, 50);
+		color = rgbcolor(255, 50, 10);
 	else
 		color = rgbcolor(255, 255, 255);
 	return (color);
