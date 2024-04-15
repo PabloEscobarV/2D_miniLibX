@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fdf.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: blackrider <blackrider@student.42.fr>      +#+  +:+       +#+        */
+/*   By: polenyc <polenyc@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/10 20:09:11 by blackrider        #+#    #+#             */
-/*   Updated: 2024/04/15 11:30:48 by blackrider       ###   ########.fr       */
+/*   Updated: 2024/04/15 13:10:27 by polenyc          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,8 @@ void	brensenhem(t_mlxdata *app, t_crd *crd)
 	dt.max = fmax(fabs(dt.dx), fabs(dt.dy));
 	dt.dx /= dt.max;
 	dt.dy /= dt.max;
+	if (fabs(crd->x) > SIZE_X || fabs(crd->y) > SIZE_Y)
+		return ;
 	while ((int)(crd->x_ - crd->x) || (int)(crd->y_ - crd->y))
 	{
 		setpixel(app, crd->x, crd->y, color);
@@ -43,14 +45,15 @@ void	brensenhem(t_mlxdata *app, t_crd *crd)
 
 void	printdata(t_mlxdata *app, int count, ...)
 {
-	int	i;
+	int		i;
 	va_list	arg;
 
 	va_start(arg, count);
 	i = 0;
 	while (i < count)
 	{
-		mlx_string_put(app->app, app->wnd, 10, 10 + 10 * i, rgbcolor(255, 255, 255),
+		mlx_string_put(app->app, app->wnd, 10, 10 + 10 * i,
+			rgbcolor(255, 255, 255),
 			va_arg(arg, char *));
 		++i;
 	}
@@ -91,7 +94,7 @@ int	main(int argc, char **argv)
 	t_mlxdata	*app;
 
 	dx = 3;
-	scale = 1;
+	scale = 2;
 	if (argc < 2)
 		exit(-1);
 	if (argc > 3 && ft_atoi(argv[3]))
