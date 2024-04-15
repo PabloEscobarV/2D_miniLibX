@@ -6,7 +6,7 @@
 /*   By: blackrider <blackrider@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/01 20:56:21 by blackrider        #+#    #+#             */
-/*   Updated: 2024/04/14 22:58:21 by blackrider       ###   ########.fr       */
+/*   Updated: 2024/04/15 11:10:53 by blackrider       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,6 +108,7 @@ long		tda_size(char ***map);
 int			sizematrix(char **mapstr);
 ////////////////////////////////T_MAPD//////////////////////////////
 t_mapd		*create_mapd(long z, long color);
+t_mapd		*crtmapd(char **mapchar, t_map *map);
 // ////////////////////////////////T_CRD//////////////////////////////
 t_crd		*crt_crd(float x, float y, float z);
 void		scale_crd(t_crd *crd, t_scale *sc);

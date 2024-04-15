@@ -6,13 +6,14 @@
 /*   By: blackrider <blackrider@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/10 20:09:11 by blackrider        #+#    #+#             */
-/*   Updated: 2024/04/14 22:50:47 by blackrider       ###   ########.fr       */
+/*   Updated: 2024/04/15 11:30:48 by blackrider       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../hdrs/fdf.h"
 #include "../minilibx-linux/mlx.h"
 #include <stdio.h>
+#include <stdarg.h>
 #include <math.h>
 
 void	brensenhem(t_mlxdata *app, t_crd *crd)
@@ -40,6 +41,22 @@ void	brensenhem(t_mlxdata *app, t_crd *crd)
 	}
 }
 
+void	printdata(t_mlxdata *app, int count, ...)
+{
+	int	i;
+	va_list	arg;
+
+	va_start(arg, count);
+	i = 0;
+	while (i < count)
+	{
+		mlx_string_put(app->app, app->wnd, 10, 10 + 10 * i, rgbcolor(255, 255, 255),
+			va_arg(arg, char *));
+		++i;
+	}
+	va_end(arg);
+}
+
 void	drawmap(t_mlxdata *app)
 {
 	int		x;
@@ -63,6 +80,7 @@ void	drawmap(t_mlxdata *app)
 	}
 	mlx_clear_window(app->app, app->wnd);
 	mlx_put_image_to_window(app->app, app->wnd, app->img->img_ptr, 0, 0);
+	printdata(app, 2, "For zoom press '+' or '-'", "For move pres arrows");
 }
 
 int	main(int argc, char **argv)
@@ -72,7 +90,7 @@ int	main(int argc, char **argv)
 	t_map		*map;
 	t_mlxdata	*app;
 
-	dx = 2;
+	dx = 3;
 	scale = 1;
 	if (argc < 2)
 		exit(-1);
