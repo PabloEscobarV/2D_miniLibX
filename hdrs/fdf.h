@@ -6,7 +6,7 @@
 /*   By: blackrider <blackrider@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/01 20:56:21 by blackrider        #+#    #+#             */
-/*   Updated: 2024/04/16 14:50:09 by blackrider       ###   ########.fr       */
+/*   Updated: 2024/04/16 20:00:15 by blackrider       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,9 +73,11 @@ typedef struct s_map
 typedef struct s_color
 {
 	long	curcolor;
-	long	s_color;
 	long	f_color;
-	float	grad;
+	long	s_color;
+	long	zcolor;
+	float	g_grad;
+	float	l_grad;
 }				t_color;
 
 typedef struct s_mlximg
@@ -109,7 +111,7 @@ void		*ft_free_mlxdata(t_mlxdata	*data);
 int			exitapp(void *app);
 ////////////////////////////////MLX_TOOLS//////////////////////////////
 int			rgbcolor(t_uchr red, t_uchr blue, t_uchr green);
-void		setpixel(t_mlxdata *app, int x, int y, int color);
+void		setpixel(t_mlxdata *app, int x, int y, long color);
 void		isometric(t_mlxdata *app, float *x, float *y, float z);
 void		setcolor(t_mlxdata *app);
 void		setvenue(t_crd *crd);

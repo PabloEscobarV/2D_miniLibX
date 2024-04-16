@@ -6,7 +6,7 @@
 /*   By: blackrider <blackrider@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 10:38:10 by blackrider        #+#    #+#             */
-/*   Updated: 2024/04/16 14:49:54 by blackrider       ###   ########.fr       */
+/*   Updated: 2024/04/16 19:19:56 by blackrider       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int		rgbcolor(t_uchr red, t_uchr blue, t_uchr green)
 	return (red << 16 | blue << 8 | green);
 }
 
-void	setpixel(t_mlxdata *app, int x, int y, int color)
+void	setpixel(t_mlxdata *app, int x, int y, long color)
 {
 	long	offset;
 

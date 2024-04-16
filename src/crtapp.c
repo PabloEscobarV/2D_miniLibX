@@ -6,7 +6,7 @@
 /*   By: blackrider <blackrider@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 10:34:25 by blackrider        #+#    #+#             */
-/*   Updated: 2024/04/16 14:51:08 by blackrider       ###   ########.fr       */
+/*   Updated: 2024/04/16 19:05:28 by blackrider       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,11 @@ t_color		*new_color(t_map *map)
 	if (!color)
 		return (NULL);
 	color->curcolor = 0;
+	color->zcolor = 0;
+	color->l_grad = 0;
 	color->s_color = rgbcolor(50, 255, 50);
 	color->f_color = rgbcolor(255, 10, 50);
-	color->grad = (color->f_color - color->s_color) / (map->zmax - map->zmin);
+	color->g_grad = (float)(color->f_color - color->s_color) / (map->zmax - map->zmin);
 	return (color);
 }
 

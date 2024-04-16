@@ -6,7 +6,7 @@
 /*   By: blackrider <blackrider@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/10 20:09:11 by blackrider        #+#    #+#             */
-/*   Updated: 2024/04/16 15:08:32 by blackrider       ###   ########.fr       */
+/*   Updated: 2024/04/16 20:38:08 by blackrider       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,21 +19,48 @@
 
 void	setcolor(t_mlxdata *app)
 {
-	long	tmp;
-
-	app->color->curcolor = app->map->crd[(int)app->crd->y]
+	app->color->zcolor = app->map->crd[(int)app->crd->y]
 		[(int)app->crd->x].color;
-	if (app->color->curcolor)
+	if (app->color->zcolor)
 		return ;
-	tmp = fmax(app->crd->z, app->crd->z_);
-	app->color->curcolor = app->color->s_color + app->color->grad * tmp;
-	if (tmp)
-		tmp = 0;
+	// if (app->crd->z > app->crd->z_)
+	// {
+	// 	app->color->zcolor = app->color->s_color + app->color->g_grad *
+	// 		app->crd->z;
+	// 	return ;
+	// }
+	app->color->zcolor = app->color->s_color + app->color->g_grad *
+		app->crd->z_;
+}
+
+void	setgradient(t_mlxdata *app, float steps)
+{
+	if (!steps || (app->color->f_color == app->color->zcolor && app->crd->z == app->crd->z_))
+		return ;
+	// if (app->crd->z > app->crd->z_)
+	// {
+	// 	app->color->l_grad = (float)(app->color->f_color - app->color->s_color)
+	// 		/ steps;
+	// 	return ;
+	// }
+	app->color->l_grad = (float)(app->color->zcolor - app->color->s_color)
+		/ steps;
+	// printf("z: %f\tz_: %f\tl_grad: %f\tg_grad: %f\n", app->crd->z, app->crd->z_, app->color->l_grad, app->color->g_grad);
+	// if (app->crd->z >= 10.0 && app->color->l_grad <= 73462.0)
+	// 	usleep(500000);
+}
+
+long	ft_min(double a, double b)
+{
+	if (a < b)
+		return (a);
+	return (b);
 }
 
 void	brensenhem(t_mlxdata *app, t_crd *crd)
 {
 	t_dt			dt;
+	t_color			color;
 
 	crd->z = app->map->crd[(int)(crd->y)][(int)(crd->x)].z;
 	crd->z_ = app->map->crd[(int)(crd->y_)][(int)(crd->x_)].z;
@@ -45,19 +72,21 @@ void	brensenhem(t_mlxdata *app, t_crd *crd)
 	dt.dx = crd->x_ - crd->x;
 	dt.dy = crd->y_ - crd->y;
 	dt.max = fmax(fabs(dt.dx), fabs(dt.dy));
+	setgradient(app, dt.max);
 	dt.dx /= dt.max;
 	dt.dy /= dt.max;
 	if (fabs(crd->x) > SIZE_X || fabs(crd->y) > SIZE_Y)
 		return ;
 	while ((int)(crd->x_ - crd->x) || (int)(crd->y_ - crd->y))
 	{
-		setpixel(app, crd->x, crd->y, app->color->curcolor);
+		setpixel(app, crd->x, crd->y, app->color->zcolor - (long)(app->color->l_grad * dt.max));
 		crd->x += dt.dx;
 		crd->y += dt.dy;
+		--dt.max;
 	}
 	// mlx_clear_window(app->app, app->wnd);
 	// mlx_put_image_to_window(app->app, app->wnd, app->img->img_ptr, 0, 0);
-	// usleep(100000);
+	// usleep(500000);
 }
 
 void	printdata(t_mlxdata *app, int count, ...)
@@ -118,7 +147,7 @@ int	main(int argc, char **argv)
 		dx = ft_atoi(argv[3]);
 	if (argc > 2 && ft_atoi(argv[2]))
 		scale = ft_atoi(argv[2]);
-	map = createmap("../maps/t1.fdf");
+	map = createmap("../maps/42.fdf");
 	if (!map)
 		exit(-1);
 	app = crt_mlxdata(map, crtscale(map, scale, dx));
