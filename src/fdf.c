@@ -6,7 +6,7 @@
 /*   By: blackrider <blackrider@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/10 20:09:11 by blackrider        #+#    #+#             */
-/*   Updated: 2024/04/15 21:31:17 by blackrider       ###   ########.fr       */
+/*   Updated: 2024/04/16 15:08:32 by blackrider       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,19 +17,18 @@
 #include <math.h>
 #include <unistd.h>
 
-long	gradient(t_mlxdata *app, t_crd *crd, long i)
+void	setcolor(t_mlxdata *app)
 {
-	if (!crd->z && crd->z_ && crd->curpos == crd->y)
-	{
-		crd->grad += i;
-		++(crd->curpos);
-	}
-	if (crd->z && !crd->z_ && crd->curpos == crd->y)
-	{
-		crd->grad -= i;
-		++(crd->curpos);
-	}
-	return (crd->grad);
+	long	tmp;
+
+	app->color->curcolor = app->map->crd[(int)app->crd->y]
+		[(int)app->crd->x].color;
+	if (app->color->curcolor)
+		return ;
+	tmp = fmax(app->crd->z, app->crd->z_);
+	app->color->curcolor = app->color->s_color + app->color->grad * tmp;
+	if (tmp)
+		tmp = 0;
 }
 
 void	brensenhem(t_mlxdata *app, t_crd *crd)
@@ -38,7 +37,7 @@ void	brensenhem(t_mlxdata *app, t_crd *crd)
 
 	crd->z = app->map->crd[(int)(crd->y)][(int)(crd->x)].z;
 	crd->z_ = app->map->crd[(int)(crd->y_)][(int)(crd->x_)].z;
-	gradient(app, app->crd, 1000);
+	setcolor(app);
 	scale_crd(crd, app->sc);
 	isometric(app, &crd->x, &crd->y, crd->z);
 	isometric(app, &crd->x_, &crd->y_, crd->z_);
@@ -52,16 +51,13 @@ void	brensenhem(t_mlxdata *app, t_crd *crd)
 		return ;
 	while ((int)(crd->x_ - crd->x) || (int)(crd->y_ - crd->y))
 	{
-		if (crd->z || crd->z_)
-			setpixel(app, crd->x, crd->y, crd->color + crd->grad);
-		else
-			setpixel(app, crd->x, crd->y, crd->color);
+		setpixel(app, crd->x, crd->y, app->color->curcolor);
 		crd->x += dt.dx;
 		crd->y += dt.dy;
 	}
-	mlx_clear_window(app->app, app->wnd);
-	mlx_put_image_to_window(app->app, app->wnd, app->img->img_ptr, 0, 0);
-	usleep(100000);
+	// mlx_clear_window(app->app, app->wnd);
+	// mlx_put_image_to_window(app->app, app->wnd, app->img->img_ptr, 0, 0);
+	// usleep(100000);
 }
 
 void	printdata(t_mlxdata *app, int count, ...)
@@ -89,11 +85,8 @@ void	drawmap(t_mlxdata *app)
 	if (!app)
 		return ;
 	y = 0;
-	app->crd->color = rgbcolor(255, 255, 255);
-	app->crd->grad = rgbcolor(255, 0, 0);
 	while (y < (int)app->map->size_y)
 	{
-		app->crd->curpos = y;
 		x = 0;
 		while (x < (int)app->map->size_x)
 		{
@@ -125,7 +118,7 @@ int	main(int argc, char **argv)
 		dx = ft_atoi(argv[3]);
 	if (argc > 2 && ft_atoi(argv[2]))
 		scale = ft_atoi(argv[2]);
-	map = createmap("../maps/42.fdf");
+	map = createmap("../maps/t1.fdf");
 	if (!map)
 		exit(-1);
 	app = crt_mlxdata(map, crtscale(map, scale, dx));
@@ -136,3 +129,18 @@ int	main(int argc, char **argv)
 	mlx_loop(app->app);
 	return (0);
 }
+
+// long	gradient(t_mlxdata *app, t_crd *crd, long i)
+// {
+// 	if (!crd->z && crd->z_ && crd->curpos == crd->y)
+// 	{
+// 		crd->grad += i;
+// 		++(crd->curpos);
+// 	}
+// 	if (crd->z && !crd->z_ && crd->curpos == crd->y)
+// 	{
+// 		crd->grad -= i;
+// 		++(crd->curpos);
+// 	}
+// 	return (crd->grad);
+// }

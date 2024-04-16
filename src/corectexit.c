@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   corectexit.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: polenyc <polenyc@student.42.fr>            +#+  +:+       +#+        */
+/*   By: blackrider <blackrider@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 14:19:44 by polenyc           #+#    #+#             */
-/*   Updated: 2024/04/15 14:20:23 by polenyc          ###   ########.fr       */
+/*   Updated: 2024/04/16 13:30:56 by blackrider       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ void	*ft_free_mlxdata(t_mlxdata	*data)
 	free(data->app);
 	free(data->sc);
 	free(data->crd);
+	free(data->color);
 	free(data);
 	return (NULL);
 }

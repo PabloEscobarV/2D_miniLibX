@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   t_crd_tools.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: polenyc <polenyc@student.42.fr>            +#+  +:+       +#+        */
+/*   By: blackrider <blackrider@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 10:31:40 by blackrider        #+#    #+#             */
-/*   Updated: 2024/04/15 14:13:11 by polenyc          ###   ########.fr       */
+/*   Updated: 2024/04/16 14:42:55 by blackrider       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,8 +78,10 @@ t_mapd	*crtmapd(char **mapchar, t_map *map)
 	{
 		tmp = ft_split(mapchar[i], ',');
 		(data + i)->z = ft_atoi(*tmp);
-		if (abs((data + i)->z) > abs(map->max))
-			map->max = (data + i)->z;
+		if ((data + i)->z > map->zmax)
+			map->zmax = (data + i)->z;
+		if ((data + i)->z < map->zmin)
+			map->zmin = (data + i)->z;
 		(data + i)->color = ft_atoi_base(*(tmp + 1), HEX_BASE_L);
 		ft_free_d((void **)tmp);
 		++i;

@@ -6,7 +6,7 @@
 /*   By: blackrider <blackrider@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/01 20:56:21 by blackrider        #+#    #+#             */
-/*   Updated: 2024/04/15 21:21:40 by blackrider       ###   ########.fr       */
+/*   Updated: 2024/04/16 14:50:09 by blackrider       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,9 +45,6 @@ typedef struct s_scale
 
 typedef struct s_crd
 {
-	int		curpos;
-	long	grad;
-	long	color;
 	float	x;
 	float	y;
 	float	z;
@@ -66,11 +63,20 @@ typedef struct s_mapd
 
 typedef struct s_map
 {
-	int		max;
+	int		zmax;
+	int		zmin;
 	size_t	size_x;
 	size_t	size_y;
 	t_mapd	**crd;
 }			t_map;
+
+typedef struct s_color
+{
+	long	curcolor;
+	long	s_color;
+	long	f_color;
+	float	grad;
+}				t_color;
 
 typedef struct s_mlximg
 {
@@ -91,6 +97,7 @@ typedef struct s_mlxdata
 	t_map		*map;
 	t_mlximg	*img;
 	t_scale		*sc;
+	t_color		*color;
 }				t_mlxdata;
 
 void		drawmap(t_mlxdata *app);
@@ -104,12 +111,13 @@ int			exitapp(void *app);
 int			rgbcolor(t_uchr red, t_uchr blue, t_uchr green);
 void		setpixel(t_mlxdata *app, int x, int y, int color);
 void		isometric(t_mlxdata *app, float *x, float *y, float z);
-long		setcolor(t_mlxdata *app, t_crd *crd, long color);
+void		setcolor(t_mlxdata *app);
 void		setvenue(t_crd *crd);
 ////////////////////////////////TOOLS//////////////////////////////
 void		*free_map(t_map	*crd);
 long		tda_size(char ***map);
 int			sizematrix(char **mapstr);
+long		ft_max(long a, long b);
 ////////////////////////////////T_MAPD//////////////////////////////
 t_mapd		*create_mapd(long z, long color);
 t_mapd		*crtmapd(char **mapchar, t_map *map);

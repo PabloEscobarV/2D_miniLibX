@@ -6,13 +6,29 @@
 /*   By: blackrider <blackrider@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 10:34:25 by blackrider        #+#    #+#             */
-/*   Updated: 2024/04/15 20:12:44 by blackrider       ###   ########.fr       */
+/*   Updated: 2024/04/16 14:51:08 by blackrider       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../hdrs/fdf.h"
 #include "../minilibx-linux/mlx.h"
 #include <math.h>
+
+t_color		*new_color(t_map *map)
+{
+	t_color	*color;
+
+	if (!map)
+		return (NULL);
+	color = malloc(sizeof(t_color));
+	if (!color)
+		return (NULL);
+	color->curcolor = 0;
+	color->s_color = rgbcolor(50, 255, 50);
+	color->f_color = rgbcolor(255, 10, 50);
+	color->grad = (color->f_color - color->s_color) / (map->zmax - map->zmin);
+	return (color);
+}
 
 t_mlxdata	*newmlxdata(void)
 {
@@ -27,6 +43,7 @@ t_mlxdata	*newmlxdata(void)
 	app->map = NULL;
 	app->sc = NULL;
 	app->crd = crt_crd(0, 0, 0);
+	app->color = NULL;
 	if (!app->img || !app->crd)
 		return (ft_free_mlxdata(app));
 	return (app);
@@ -35,9 +52,10 @@ t_mlxdata	*newmlxdata(void)
 void		setzscale(t_mlxdata *app)
 {
 	app->sc->zscale = app->sc->xscale * app->sc->xscale / app->sc->yscale;
-	if (fabs(app->sc->zscale * app->map->max) < SIZE_Y / app->sc->scale / 3)
+	if (fabs(app->sc->zscale * ft_max(abs(app->map->zmax), abs(app->map->zmin)))
+		< SIZE_Y / app->sc->scale / 3)
 		return ;
-	app->sc->zscale = SIZE_Y / (abs(app->map->max)  * app->sc->scale * 3);
+	app->sc->zscale = SIZE_Y / (abs(app->map->zmax)  * app->sc->scale * 3);
 }
 
 t_mlxdata	*crt_mlxdata(t_map *map, t_scale *sc)
@@ -63,6 +81,7 @@ t_mlxdata	*crt_mlxdata(t_map *map, t_scale *sc)
 	if (!(app->img->img_ptr) || !(app->img->img_pixels))
 		return (ft_free_mlxdata(app));
 	app->sc = sc;
+	app->color = new_color(map);
 	setxys(app, app->crd);
 	setzscale(app);
 	return (app);

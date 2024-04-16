@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mapform.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: polenyc <polenyc@student.42.fr>            +#+  +:+       +#+        */
+/*   By: blackrider <blackrider@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 13:21:21 by polenyc           #+#    #+#             */
-/*   Updated: 2024/04/15 14:09:24 by polenyc          ###   ########.fr       */
+/*   Updated: 2024/04/16 13:43:33 by blackrider       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,7 +105,8 @@ t_map	*createmap(const char *filename)
 	if (!charmap)
 		return (NULL);
 	map = malloc(sizeof(t_map));
-	map->max = 0;
+	map->zmin = 0;
+	map->zmax = 0;
 	map->size_x = sizematrix(*charmap);
 	map->size_y = tda_size(charmap);
 	map->crd = malloc((map->size_y + 1) * sizeof(t_mapd *));
