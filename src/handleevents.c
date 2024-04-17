@@ -6,7 +6,7 @@
 /*   By: blackrider <blackrider@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/14 20:53:23 by blackrider        #+#    #+#             */
-/*   Updated: 2024/04/15 16:00:16 by blackrider       ###   ########.fr       */
+/*   Updated: 2024/04/17 14:43:44 by blackrider       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,12 +27,6 @@ int	scaling(t_mlxdata *app, int key, float scale)
 	clear_img(app);
 	drawmap(app);
 	return (1);
-}
-
-int	handle_mouse_scroll(int key, int x, int y, void *app)
-{
-	printf("mouse scroll event has been activates\n");
-	return (scaling(app, key, 0.1));
 }
 
 int	changevenue(t_mlxdata *app, int key, int i)
@@ -62,3 +56,9 @@ int	handleevent(int key, t_mlxdata *app)
 		return (0);
 	return (0);
 }
+
+// int	handle_mouse_scroll(int key, int x, int y, void *app)
+// {
+// 	printf("mouse scroll event has been activates\n");
+// 	return (scaling(app, key, 0.1));
+// }

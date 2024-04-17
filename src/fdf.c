@@ -6,7 +6,7 @@
 /*   By: blackrider <blackrider@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/10 20:09:11 by blackrider        #+#    #+#             */
-/*   Updated: 2024/04/17 14:26:07 by blackrider       ###   ########.fr       */
+/*   Updated: 2024/04/17 14:44:32 by blackrider       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,6 @@ void	brens_atend(t_mlxdata *app, t_crd *crd, t_dt *dt)
 void	brensenhem(t_mlxdata *app, t_crd *crd)
 {
 	t_dt			dt;
-	t_color			color;
 
 	crd->z = app->map->crd[(int)(crd->y)][(int)(crd->x)].z;
 	crd->z_ = app->map->crd[(int)(crd->y_)][(int)(crd->x_)].z;
@@ -115,7 +114,6 @@ int	main(int argc, char **argv)
 		exit(-1);
 	app = crt_mlxdata(map, crtscale(map, scale, dx));
 	drawmap(app);
-	mlx_hook(app->wnd, 4, 0, handle_mouse_scroll, app);
 	mlx_hook(app->wnd, 2, 1L, handleevent, app);
 	mlx_hook(app->wnd, 17, 1L << 3, exitapp, app);
 	mlx_loop(app->app);
