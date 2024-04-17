@@ -20,25 +20,6 @@ CLIBFLAFGS = -L$(GNLDIR) -l$(GNL) -L$(LIBFTDIR) -l$(LIBFT) -L$(MLXDIR) -l$(MLX) 
 
 all: $(NAME)
 
-$(NAME): $(OBJ) $(GNL) $(LIBFT) $(MLX)
-	$(MAKE) -C $(GNLDIR) bonus
-	$(MAKE) -C $(LIBFTDIR)
-	$(MAKE) -C $(MLXDIR)
-	$(CC) $(CFLAG) $(OBJ) $(CLIBFLAFGS) -o $@
-
-$(OBJDIR)/%.o: $(SRCDIR)/%.c
-	mkdir -p $(OBJDIR)
-	$(CC) -c $(CFLAG) $< -o $@
-
-$(GNL):
-	$(MAKE) -C $(GNLDIR) bonus
-
-$(LIBFT):
-	$(MAKE) -C $(LIBFTDIR)
-
-$(MLX):
-	$(MAKE) -C $(MLXDIR)
-
 clean:
 	$(MAKE) -C $(MLXDIR) clean
 	$(MAKE) -C $(GNLDIR) clean
@@ -55,5 +36,25 @@ clean_re:
 	rm -rf $(OBJDIR) $(NAME)
 
 re: clean_re all
+
+$(NAME): $(OBJ) $(GNL) $(LIBFT) $(MLX)
+	$(MAKE) -C $(GNLDIR) bonus
+	$(MAKE) -C $(LIBFTDIR)
+	$(MAKE) -C $(MLXDIR)
+	$(CC) -O3 $(CFLAG) $(OBJ) $(CLIBFLAFGS) -o $@
+
+$(OBJDIR)/%.o: $(SRCDIR)/%.c
+	mkdir -p $(OBJDIR)
+	$(CC) -O3 -c $(CFLAG) $< -o $@
+
+$(GNL):
+	$(MAKE) -C $(GNLDIR) bonus
+
+$(LIBFT):
+	$(MAKE) -C $(LIBFTDIR)
+
+$(MLX):
+	$(MAKE) -C $(MLXDIR)
+
 
 
