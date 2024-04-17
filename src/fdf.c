@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fdf.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: polenyc <polenyc@student.42.fr>            +#+  +:+       +#+        */
+/*   By: blackrider <blackrider@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/10 20:09:11 by blackrider        #+#    #+#             */
-/*   Updated: 2024/04/17 13:53:26 by polenyc          ###   ########.fr       */
+/*   Updated: 2024/04/17 14:26:07 by blackrider       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,18 @@
 #include <stdarg.h>
 #include <math.h>
 #include <unistd.h>
+
+void	brens_atend(t_mlxdata *app, t_crd *crd, t_dt *dt)
+{
+	while ((int)(crd->x_ - crd->x) || (int)(crd->y_ - crd->y))
+	{
+		setpixel(app, crd->x, crd->y, app->color->zcolor
+			- (long)(app->color->l_grad * dt->max));
+		crd->x += dt->dx;
+		crd->y += dt->dy;
+		--dt->max;
+	}
+}
 
 void	brensenhem(t_mlxdata *app, t_crd *crd)
 {
@@ -37,13 +49,7 @@ void	brensenhem(t_mlxdata *app, t_crd *crd)
 	dt.dy /= dt.max;
 	if (fabs(crd->x) > SIZE_X || fabs(crd->y) > SIZE_Y)
 		return ;
-	while ((int)(crd->x_ - crd->x) || (int)(crd->y_ - crd->y))
-	{
-		setpixel(app, crd->x, crd->y, app->color->zcolor - (long)(app->color->l_grad * dt.max));
-		crd->x += dt.dx;
-		crd->y += dt.dy;
-		--dt.max;
-	}
+	brens_atend(app, crd, &dt);
 }
 
 void	printdata(t_mlxdata *app, int count, ...)
@@ -98,13 +104,13 @@ int	main(int argc, char **argv)
 
 	dx = 2;
 	scale = 1;
-	// if (argc < 2)
-	// 	exit(-1);
+	if (argc < 2)
+		exit(-1);
 	if (argc > 3 && ft_atoi(argv[3]))
 		dx = ft_atoi(argv[3]);
 	if (argc > 2 && ft_atoi(argv[2]))
 		scale = ft_atoi(argv[2]);
-	map = createmap("../maps/pylone.fdf");
+	map = createmap(argv[1]);
 	if (!map)
 		exit(-1);
 	app = crt_mlxdata(map, crtscale(map, scale, dx));

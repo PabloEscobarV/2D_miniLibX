@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fdf.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: polenyc <polenyc@student.42.fr>            +#+  +:+       +#+        */
+/*   By: blackrider <blackrider@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/01 20:56:21 by blackrider        #+#    #+#             */
-/*   Updated: 2024/04/17 13:52:44 by polenyc          ###   ########.fr       */
+/*   Updated: 2024/04/17 14:34:06 by blackrider       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,8 @@
 #include <unistd.h>
 
 #define HEX_FDF 			"0123456789ABCDEF"
-#define SIZE_X 				2000
-#define SIZE_Y 				1500
+#define SIZE_X 				1900
+#define SIZE_Y 				1100
 #define MOUSE_SCROLL_UP 	4
 #define MOUSE_SCROLL_DOWN 	5
 #define ZOOM_IN				65453
@@ -74,7 +74,6 @@ typedef struct s_map
 typedef struct s_color
 {
 	long	curcolor;
-	long	d_color;
 	long	f_color;
 	long	s_color;
 	long	zcolor;

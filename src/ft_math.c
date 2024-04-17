@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   ft_math.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: polenyc <polenyc@student.42.fr>            +#+  +:+       +#+        */
+/*   By: blackrider <blackrider@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 13:53:00 by polenyc           #+#    #+#             */
-/*   Updated: 2024/04/17 13:55:54 by polenyc          ###   ########.fr       */
+/*   Updated: 2024/04/17 14:17:13 by blackrider       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../hdrs/fdf.h"
 
-long		ft_abs(long x)
+long	ft_abs(long x)
 {
 	if (x < 0)
 		return (-x);
@@ -25,7 +25,6 @@ long	ft_min(double a, double b)
 		return (a);
 	return (b);
 }
-
 
 long	tda_size(char ***map)
 {

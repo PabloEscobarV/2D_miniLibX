@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mapform.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: polenyc <polenyc@student.42.fr>            +#+  +:+       +#+        */
+/*   By: blackrider <blackrider@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 13:21:21 by polenyc           #+#    #+#             */
-/*   Updated: 2024/04/17 13:56:58 by polenyc          ###   ########.fr       */
+/*   Updated: 2024/04/17 14:24:27 by blackrider       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,21 +79,10 @@ char	***crtcharmap(const char *filename)
 	return (map);
 }
 
-t_map	*createmap(const char *filename)
+t_map	*setcrd(t_map *map, char ***charmap)
 {
-	int		i;
-	char	***charmap;
-	t_map	*map;
+	int	i;
 
-	charmap = crtcharmap(filename);
-	if (!charmap)
-		return (NULL);
-	map = malloc(sizeof(t_map));
-	map->zmin = 0;
-	map->zmax = 0;
-	map->size_x = sizematrix(*charmap);
-	map->size_y = tda_size(charmap);
-	map->crd = malloc((map->size_y + 1) * sizeof(t_mapd *));
 	i = 0;
 	while (i < (int)map->size_y)
 	{
@@ -105,6 +94,27 @@ t_map	*createmap(const char *filename)
 		}
 		++i;
 	}
+	return (map);
+}
+
+t_map	*createmap(const char *filename)
+{
+	char	***charmap;
+	t_map	*map;
+
+	charmap = crtcharmap(filename);
+	if (!charmap)
+		return (NULL);
+	map = malloc(sizeof(t_map));
+	if (!map)
+		return (ft_free_t((void ***)charmap));
+	map->zmin = 0;
+	map->zmax = 0;
+	map->size_x = sizematrix(*charmap);
+	map->size_y = tda_size(charmap);
+	map->crd = malloc((map->size_y + 1) * sizeof(t_mapd *));
+	if (!setcrd(map, charmap))
+		return (NULL);
 	map->zavg = (map->zmax - map->zmin) / 2;
 	map->crd[map->size_y] = NULL;
 	ft_free_t((void ***)charmap);
