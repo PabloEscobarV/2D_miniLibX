@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mapform.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: blackrider <blackrider@student.42.fr>      +#+  +:+       +#+        */
+/*   By: polenyc <polenyc@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 13:21:21 by polenyc           #+#    #+#             */
-/*   Updated: 2024/04/16 13:43:33 by blackrider       ###   ########.fr       */
+/*   Updated: 2024/04/17 13:56:58 by polenyc          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,22 +15,6 @@
 #include <unistd.h>
 #include <fcntl.h>
 #include <stdio.h>
-
-long	filesize(const char *filename)
-{
-	long	size;
-	char	tmp;
-	int		file;
-
-	file = open(filename, O_RDONLY);
-	if (file < 3)
-		return (-1);
-	size = 0;
-	while (read(file, &tmp, sizeof(char)))
-		++size;
-	close(file);
-	return (size);
-}
 
 char	*maptostr(const char *filename)
 {
@@ -121,6 +105,7 @@ t_map	*createmap(const char *filename)
 		}
 		++i;
 	}
+	map->zavg = (map->zmax - map->zmin) / 2;
 	map->crd[map->size_y] = NULL;
 	ft_free_t((void ***)charmap);
 	return (map);

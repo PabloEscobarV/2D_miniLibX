@@ -6,7 +6,7 @@
 /*   By: polenyc <polenyc@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/10 20:09:11 by blackrider        #+#    #+#             */
-/*   Updated: 2024/04/17 12:31:15 by polenyc          ###   ########.fr       */
+/*   Updated: 2024/04/17 13:53:26 by polenyc          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,42 +16,6 @@
 #include <stdarg.h>
 #include <math.h>
 #include <unistd.h>
-
-void	setcolor(t_mlxdata *app)
-{
-	app->color->zcolor = app->map->crd[(int)app->crd->y]
-		[(int)app->crd->x].color;
-	if (app->color->zcolor)
-	{
-		app->color->curcolor = app->color->zcolor;
-		return ;
-	}
-	app->color->zcolor = app->color->s_color + app->color->g_grad *
-		app->crd->z_;
-	app->color->curcolor = app->color->s_color + app->color->g_grad *
-		app->crd->z;
-	// printf("z: %f\tz_: %f\tl_grad: %f\tg_grad: %f\n", app->crd->z, app->crd->z_, app->color->l_grad, app->color->g_grad);
-	// // if (app->crd->z > 0 && app->crd->z == app->crd->z_)
-	// // 	usleep(500000);
-}
-
-void	setgradient(t_mlxdata *app, float steps)
-{
-	if (!steps || (app->color->f_color == app->color->zcolor && app->crd->z == app->crd->z_))
-	{
-		app->color->l_grad = 0;
-		return ;
-	}
-	app->color->l_grad = (float)(app->color->zcolor - app->color->curcolor)
-		/ steps;
-}
-
-long	ft_min(double a, double b)
-{
-	if (a < b)
-		return (a);
-	return (b);
-}
 
 void	brensenhem(t_mlxdata *app, t_crd *crd)
 {
@@ -80,11 +44,6 @@ void	brensenhem(t_mlxdata *app, t_crd *crd)
 		crd->y += dt.dy;
 		--dt.max;
 	}
-	// mlx_clear_window(app->app, app->wnd);
-	// mlx_put_image_to_window(app->app, app->wnd, app->img->img_ptr, 0, 0);
-	// usleep(100000);
-	// if (crd->z > 0 && crd->z == crd->z_)
-	// 	usleep(500000);
 }
 
 void	printdata(t_mlxdata *app, int count, ...)
@@ -145,7 +104,7 @@ int	main(int argc, char **argv)
 		dx = ft_atoi(argv[3]);
 	if (argc > 2 && ft_atoi(argv[2]))
 		scale = ft_atoi(argv[2]);
-	map = createmap("../maps/mars.fdf");
+	map = createmap("../maps/pylone.fdf");
 	if (!map)
 		exit(-1);
 	app = crt_mlxdata(map, crtscale(map, scale, dx));
@@ -156,18 +115,3 @@ int	main(int argc, char **argv)
 	mlx_loop(app->app);
 	return (0);
 }
-
-// long	gradient(t_mlxdata *app, t_crd *crd, long i)
-// {
-// 	if (!crd->z && crd->z_ && crd->curpos == crd->y)
-// 	{
-// 		crd->grad += i;
-// 		++(crd->curpos);
-// 	}
-// 	if (crd->z && !crd->z_ && crd->curpos == crd->y)
-// 	{
-// 		crd->grad -= i;
-// 		++(crd->curpos);
-// 	}
-// 	return (crd->grad);
-// }

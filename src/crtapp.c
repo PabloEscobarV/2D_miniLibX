@@ -6,39 +6,13 @@
 /*   By: polenyc <polenyc@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 10:34:25 by blackrider        #+#    #+#             */
-/*   Updated: 2024/04/17 12:30:15 by polenyc          ###   ########.fr       */
+/*   Updated: 2024/04/17 13:53:15 by polenyc          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../hdrs/fdf.h"
 #include "../minilibx-linux/mlx.h"
 #include <math.h>
-
-long		ft_abs(long x)
-{
-	if (x < 0)
-		return (-x);
-	return (x);
-}
-
-t_color		*new_color(t_map *map)
-{
-	t_color	*color;
-
-	if (!map)
-		return (NULL);
-	color = malloc(sizeof(t_color));
-	if (!color)
-		return (NULL);
-	color->curcolor = 0;
-	color->zcolor = 0;
-	color->l_grad = 0;
-	color->f_color = rgbcolor(255, 0, 50);
-	color->d_color = rgbcolor(100, 255, 0);
-	color->s_color = ft_abs(color->f_color - color->d_color) / 2;
-	color->g_grad = (float)(color->f_color - color->s_color) / (map->zmax - map->zmin);
-	return (color);
-}
 
 t_mlxdata	*newmlxdata(void)
 {

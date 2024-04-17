@@ -6,7 +6,7 @@
 /*   By: polenyc <polenyc@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/01 20:56:21 by blackrider        #+#    #+#             */
-/*   Updated: 2024/04/17 12:19:38 by polenyc          ###   ########.fr       */
+/*   Updated: 2024/04/17 13:52:44 by polenyc          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,7 @@ typedef struct s_map
 {
 	int		zmax;
 	int		zmin;
+	int		zavg;
 	size_t	size_x;
 	size_t	size_y;
 	t_mapd	**crd;
@@ -78,8 +79,6 @@ typedef struct s_color
 	long	s_color;
 	long	zcolor;
 	float	g_grad;
-	float	g_hgrad;
-	float	g_dgrad;
 	float	l_grad;
 }				t_color;
 
@@ -117,12 +116,15 @@ int			rgbcolor(t_uchr red, t_uchr blue, t_uchr green);
 void		setpixel(t_mlxdata *app, int x, int y, long color);
 void		isometric(t_mlxdata *app, float *x, float *y, float z);
 void		setcolor(t_mlxdata *app);
+void		setgradient(t_mlxdata *app, float steps);
+t_color		*new_color(t_map *map);
 void		setvenue(t_crd *crd);
 ////////////////////////////////TOOLS//////////////////////////////
 void		*free_map(t_map	*crd);
 long		tda_size(char ***map);
 int			sizematrix(char **mapstr);
 long		ft_max(long a, long b);
+long		ft_abs(long x);
 ////////////////////////////////T_MAPD//////////////////////////////
 t_mapd		*create_mapd(long z, long color);
 t_mapd		*crtmapd(char **mapchar, t_map *map);

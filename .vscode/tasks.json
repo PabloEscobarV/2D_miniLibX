@@ -14,6 +14,8 @@
                 "mlx_tools.c",
                 "rotate.c",
                 "t_crd_tools.c",
+                "setcolor.c",
+                "ft_math.c",
                 "tools.c",
                 "corectexit.c",
                 "-L../get_next_line",
