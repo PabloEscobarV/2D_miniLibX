@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fdf.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: blackrider <blackrider@student.42.fr>      +#+  +:+       +#+        */
+/*   By: polenyc <polenyc@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/01 20:56:21 by blackrider        #+#    #+#             */
-/*   Updated: 2024/04/17 09:53:40 by blackrider       ###   ########.fr       */
+/*   Updated: 2024/04/17 10:55:02 by polenyc          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,8 @@
 #include <unistd.h>
 
 #define HEX_FDF 			"0123456789ABCDEF"
-#define SIZE_X 				1000
-#define SIZE_Y 				1100
+#define SIZE_X 				2400
+#define SIZE_Y 				1800
 #define MOUSE_SCROLL_UP 	4
 #define MOUSE_SCROLL_DOWN 	5
 #define ZOOM_IN				65453

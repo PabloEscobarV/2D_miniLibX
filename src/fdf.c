@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fdf.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: blackrider <blackrider@student.42.fr>      +#+  +:+       +#+        */
+/*   By: polenyc <polenyc@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/10 20:09:11 by blackrider        #+#    #+#             */
-/*   Updated: 2024/04/17 10:18:12 by blackrider       ###   ########.fr       */
+/*   Updated: 2024/04/17 11:34:12 by polenyc          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,13 +37,15 @@ void	setcolor(t_mlxdata *app)
 
 void	setgradient(t_mlxdata *app, float steps)
 {
-	if (!steps || (app->color->f_color == app->color->zcolor && app->crd->z == app->crd->z_))
+	if (!steps || (app->crd->z == app->crd->z_))
 	{
 		app->color->l_grad = 0;
 		return ;
 	}
 	app->color->l_grad = (float)(app->color->zcolor - app->color->curcolor)
 		/ steps;
+	if (app->crd->z_ > 0)
+		usleep(100000);
 }
 
 long	ft_min(double a, double b)
@@ -80,9 +82,9 @@ void	brensenhem(t_mlxdata *app, t_crd *crd)
 		crd->y += dt.dy;
 		--dt.max;
 	}
-	// mlx_clear_window(app->app, app->wnd);
-	// mlx_put_image_to_window(app->app, app->wnd, app->img->img_ptr, 0, 0);
-	// usleep(100000);
+	mlx_clear_window(app->app, app->wnd);
+	mlx_put_image_to_window(app->app, app->wnd, app->img->img_ptr, 0, 0);
+	usleep(100000);
 	// if (crd->z > 0 && crd->z == crd->z_)
 	// 	usleep(500000);
 }
@@ -145,7 +147,7 @@ int	main(int argc, char **argv)
 		dx = ft_atoi(argv[3]);
 	if (argc > 2 && ft_atoi(argv[2]))
 		scale = ft_atoi(argv[2]);
-	map = createmap("../maps/elem2.fdf");
+	map = createmap("../maps/42.fdf");
 	if (!map)
 		exit(-1);
 	app = crt_mlxdata(map, crtscale(map, scale, dx));
