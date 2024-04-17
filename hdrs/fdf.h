@@ -6,7 +6,7 @@
 /*   By: polenyc <polenyc@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/01 20:56:21 by blackrider        #+#    #+#             */
-/*   Updated: 2024/04/17 10:55:02 by polenyc          ###   ########.fr       */
+/*   Updated: 2024/04/17 12:19:38 by polenyc          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,8 @@
 #include <unistd.h>
 
 #define HEX_FDF 			"0123456789ABCDEF"
-#define SIZE_X 				2400
-#define SIZE_Y 				1800
+#define SIZE_X 				2000
+#define SIZE_Y 				1500
 #define MOUSE_SCROLL_UP 	4
 #define MOUSE_SCROLL_DOWN 	5
 #define ZOOM_IN				65453
@@ -73,10 +73,13 @@ typedef struct s_map
 typedef struct s_color
 {
 	long	curcolor;
+	long	d_color;
 	long	f_color;
 	long	s_color;
 	long	zcolor;
 	float	g_grad;
+	float	g_hgrad;
+	float	g_dgrad;
 	float	l_grad;
 }				t_color;
 
