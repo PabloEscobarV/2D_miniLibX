@@ -18,7 +18,8 @@ CLIBFLAFGS = -L$(GNLDIR) -l$(GNL) -L$(LIBFTDIR) -l$(LIBFT) -L$(MLXDIR) -l$(MLX) 
 
 .PHONY: all, bonus, clean, fclean, clean_re, re
 
-all: $(NAME)
+all: makelibs
+	$(MAKE) $(NAME)
 
 clean:
 	$(MAKE) -C $(MLXDIR) clean
@@ -35,13 +36,17 @@ fclean:
 clean_re:
 	rm -rf $(OBJDIR) $(NAME)
 
-re: clean_re all
+re: fclean all
 
-$(NAME): $(OBJ) $(GNL) $(LIBFT) $(MLX)
+bonus: all
+
+makelibs:
 	$(MAKE) -C $(GNLDIR) bonus
 	$(MAKE) -C $(LIBFTDIR)
 	$(MAKE) -C $(MLXDIR)
-	$(CC) -O3 $(CFLAG) $(OBJ) $(CLIBFLAFGS) -o $@
+
+$(NAME): $(OBJ)
+	$(CC) -O3 $(CFLAG) $(OBJ) $(CLIBFLAFGS) -o $(NAME)
 
 $(OBJDIR)/%.o: $(SRCDIR)/%.c
 	mkdir -p $(OBJDIR)
