@@ -6,7 +6,7 @@
 /*   By: blackrider <blackrider@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/14 20:53:23 by blackrider        #+#    #+#             */
-/*   Updated: 2024/04/17 14:43:44 by blackrider       ###   ########.fr       */
+/*   Updated: 2024/04/18 14:15:47 by blackrider       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	scaling(t_mlxdata *app, int key, float scale)
 		if (app->sc->scale > scale * 2)
 			app->sc->scale -= scale;
 	app->sc->xscale = (float)SIZE_X / app->sc->scale / (float)app->map->size_x;
-	app->sc->yscale = (float)SIZE_Y / app->sc->scale / (float)app->map->size_y;
+	app->sc->yscale = (float)SIZE_X / app->sc->scale / (float)app->map->size_y;
 	setzscale(app);
 	clear_img(app);
 	drawmap(app);

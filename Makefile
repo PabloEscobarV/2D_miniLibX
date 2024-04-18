@@ -36,7 +36,7 @@ fclean:
 clean_re:
 	rm -rf $(OBJDIR) $(NAME)
 
-re: fclean all
+re: clean_re all
 
 bonus: all
 

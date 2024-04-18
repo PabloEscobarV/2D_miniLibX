@@ -6,7 +6,7 @@
 /*   By: blackrider <blackrider@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 10:31:40 by blackrider        #+#    #+#             */
-/*   Updated: 2024/04/16 14:42:55 by blackrider       ###   ########.fr       */
+/*   Updated: 2024/04/18 14:20:33 by blackrider       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,8 @@ void	scale_crd(t_crd *crd, t_scale *sc)
 
 t_crd	*setxys(t_mlxdata *app, t_crd *crd)
 {
-	crd->xs = (SIZE_X - app->map->size_x * app->sc->xscale) / (1.3);
-	crd->ys = (SIZE_Y - app->map->size_y * app->sc->yscale) / (2.3);
+	crd->xs = (SIZE_X - app->map->size_x * app->sc->xscale);
+	crd->ys = (SIZE_Y - app->map->size_y * app->sc->yscale);
 	return (crd);
 }
 

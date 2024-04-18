@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tools.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: polenyc <polenyc@student.42.fr>            +#+  +:+       +#+        */
+/*   By: blackrider <blackrider@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/10 14:46:37 by blackrider        #+#    #+#             */
-/*   Updated: 2024/04/17 13:55:49 by polenyc          ###   ########.fr       */
+/*   Updated: 2024/04/18 14:16:12 by blackrider       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ t_scale	*crtscale(t_map *map, float zscale, int dx)
 		return (NULL);
 	scale->scale = (float)dx;
 	scale->xscale = (float)SIZE_X / dx / (float)map->size_x;
-	scale->yscale = (float)SIZE_Y / dx / (float)map->size_y;
+	scale->yscale = (float)SIZE_X / dx / (float)map->size_y;
 	scale->zscale = zscale;
 	return (scale);
 }
